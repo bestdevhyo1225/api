@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    master:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:9030/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      username: masteruser
+      password: masterpassword
+      maximum-pool-size: 20
+    slave:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      username: slaveuser
+      password: slavepassword
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 500
+    open-in-view: false
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+
+logging:
+  level:
+    com.hyoseok.dynamicdatasource: debug
+    com.zaxxer.hikari.HikariConfig: debug
+    com.zaxxer.hikari: trace
+    org.hibernate.SQL: debug
+
+
+
