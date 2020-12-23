@@ -1,0 +1,3 @@
+CREATE DATABASE mystore;
+
+CREATE TABLE mystore.temp(id VARCHAR(100) PRIMARY KEY);
