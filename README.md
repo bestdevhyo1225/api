@@ -6,7 +6,7 @@ Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동
 
 ## Master/Slave Docker Container 만들기
 
-- [Master / Slave 기반 Docker MySQL 컨테이너 구성](https://github.com/bestdevhyo1225/dynamic-datasource/tree/master/docker-mysql)
+- [Master / Slave 기반 Docker MySQL 컨테이너 구성하러 가기](https://github.com/bestdevhyo1225/dynamic-datasource/tree/master/docker-mysql)
 
 <br>
 
