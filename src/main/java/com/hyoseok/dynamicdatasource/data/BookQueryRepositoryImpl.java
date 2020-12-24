@@ -1,5 +1,7 @@
-package com.hyoseok.dynamicdatasource.domain.item.entity;
+package com.hyoseok.dynamicdatasource.data;
 
+import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
+import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
