@@ -34,3 +34,4 @@ logging:
     com.zaxxer.hikari.HikariConfig: debug
     com.zaxxer.hikari: trace
     org.hibernate.SQL: debug
+    org.hibernate.type: trace
