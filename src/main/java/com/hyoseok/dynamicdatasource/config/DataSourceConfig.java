@@ -9,6 +9,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@Profile(value = "!test") // active가 test이면 제외하고, 나머지 모두 적용
 @EnableTransactionManagement // DataSourceTransactionManager Bean을 찾아 Transaction Manager로 사용한다.
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class}) // 기존의 DataSourceAutoConfiguration을 제외하고...
 @EnableJpaRepositories(basePackages = {"com.hyoseok.dynamicdatasource.domain"})
