@@ -51,8 +51,7 @@ public class BookCommandServiceImpl implements BookCommandService {
 
     @Override
     public BookModificationResult update(BookCommand bookCommand) {
-        Book book = bookRepository.findById(bookCommand.getBookId())
-                .orElseThrow(NotFoundBookException::new);
+        Book book = bookRepository.findById(bookCommand.getBookId()).orElseThrow(NotFoundBookException::new);
 
         book.change(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice());
 
