@@ -10,16 +10,16 @@ import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookMapper;
 import com.hyoseok.dynamicdatasource.domain.item.mapper.UpdateBookMapper;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.BookCommandService;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.BookQueryService;
-import com.hyoseok.dynamicdatasource.web.request.CreateBookImageRequest;
 import com.hyoseok.dynamicdatasource.web.request.CreateBookRequest;
 import com.hyoseok.dynamicdatasource.web.request.UpdateBookRequest;
+import com.hyoseok.dynamicdatasource.web.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,22 +32,22 @@ public class BookController {
     private final BookCommandService commandService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<FindBookDto> findBook(@PathVariable("id") Long bookId) {
-        return ResponseEntity.ok().body(queryService.findBook(bookId));
+    public ResponseEntity<SuccessResponse<FindBookDto>> findBook(@PathVariable("id") Long bookId) {
+        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBook(bookId)));
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<FindBookDetailDto> findBookDetail(@PathVariable("id") Long bookId) {
-        return ResponseEntity.ok().body(queryService.findBookLeftJoin(bookId));
+    public ResponseEntity<SuccessResponse<FindBookDetailDto>> findBookDetail(@PathVariable("id") Long bookId) {
+        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBookLeftJoin(bookId)));
     }
 
     @GetMapping
-    public ResponseEntity<List<FindBookDto>> findBooks() {
-        return ResponseEntity.ok().body(queryService.findBooks());
+    public ResponseEntity<SuccessResponse<List<FindBookDto>>> findBooks() {
+        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBooks()));
     }
 
     @PostMapping
-    public ResponseEntity<CreatedBookDto> create(@RequestBody @Valid CreateBookRequest request) {
+    public ResponseEntity<SuccessResponse<CreatedBookDto>> create(@RequestBody @Valid CreateBookRequest request) {
         CreateBookMapper bookMapper = CreateBookMapper.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
@@ -71,11 +71,12 @@ public class BookController {
 
         CreatedBookDto createdBookDto = commandService.create(bookMapper, bookDescriptionMapper, bookImageMappers);
 
-        return ResponseEntity.created(URI.create("/books/" + createdBookDto.getBookId())).body(createdBookDto);
+        return ResponseEntity.created(URI.create("/books/" + createdBookDto.getBookId()))
+                .body(new SuccessResponse<>(HttpStatus.CREATED.value(), createdBookDto));
     }
 
     @PatchMapping
-    public ResponseEntity<UpdatedBookDto> update(@RequestBody @Valid UpdateBookRequest request) {
+    public ResponseEntity<SuccessResponse<UpdatedBookDto>> update(@RequestBody @Valid UpdateBookRequest request) {
         UpdateBookMapper mapper = UpdateBookMapper.builder()
                 .bookId(request.getBookId())
                 .title(request.getTitle())
@@ -85,6 +86,6 @@ public class BookController {
 
         UpdatedBookDto updatedBookDto = commandService.update(mapper);
 
-        return ResponseEntity.ok().body(updatedBookDto);
+        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), updatedBookDto));
     }
 }

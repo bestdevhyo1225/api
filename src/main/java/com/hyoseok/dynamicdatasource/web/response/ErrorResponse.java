@@ -1,11 +1,11 @@
-package com.hyoseok.dynamicdatasource.web.exception;
+package com.hyoseok.dynamicdatasource.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ApplicationError {
+public class ErrorResponse {
     private final int status;
     private final String error;
     private final String message;
