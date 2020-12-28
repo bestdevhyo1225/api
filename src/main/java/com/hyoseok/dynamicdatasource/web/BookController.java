@@ -1,8 +1,6 @@
 package com.hyoseok.dynamicdatasource.web;
 
 import com.hyoseok.dynamicdatasource.domain.item.dto.CreatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.FindBookDetailDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.FindBookDto;
 import com.hyoseok.dynamicdatasource.domain.item.dto.UpdatedBookDto;
 import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookDescriptionMapper;
 import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookImageMapper;
@@ -32,22 +30,22 @@ public class BookController {
     private final BookCommandService commandService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<SuccessResponse<?>> findBook(@PathVariable("id") Long bookId) {
-        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBook(bookId)));
+    public ResponseEntity<SuccessResponse> findBook(@PathVariable("id") Long bookId) {
+        return ResponseEntity.ok().body(new SuccessResponse(HttpStatus.OK.value(), queryService.findBook(bookId)));
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<SuccessResponse<?>> findBookDetail(@PathVariable("id") Long bookId) {
-        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBookLeftJoin(bookId)));
+    public ResponseEntity<SuccessResponse> findBookDetail(@PathVariable("id") Long bookId) {
+        return ResponseEntity.ok().body(new SuccessResponse(HttpStatus.OK.value(), queryService.findBookLeftJoin(bookId)));
     }
 
     @GetMapping
-    public ResponseEntity<SuccessResponse<?>> findBooks() {
-        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBooks()));
+    public ResponseEntity<SuccessResponse> findBooks() {
+        return ResponseEntity.ok().body(new SuccessResponse(HttpStatus.OK.value(), queryService.findBooks()));
     }
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<?>> create(@RequestBody @Valid CreateBookRequest request) {
+    public ResponseEntity<SuccessResponse> create(@RequestBody @Valid CreateBookRequest request) {
         CreateBookMapper bookMapper = CreateBookMapper.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
@@ -72,11 +70,11 @@ public class BookController {
         CreatedBookDto createdBookDto = commandService.create(bookMapper, bookDescriptionMapper, bookImageMappers);
 
         return ResponseEntity.created(URI.create("/books/" + createdBookDto.getBookId()))
-                .body(new SuccessResponse<>(HttpStatus.CREATED.value(), createdBookDto));
+                .body(new SuccessResponse(HttpStatus.CREATED.value(), createdBookDto));
     }
 
     @PatchMapping
-    public ResponseEntity<SuccessResponse<?>> update(@RequestBody @Valid UpdateBookRequest request) {
+    public ResponseEntity<SuccessResponse> update(@RequestBody @Valid UpdateBookRequest request) {
         UpdateBookMapper mapper = UpdateBookMapper.builder()
                 .bookId(request.getBookId())
                 .title(request.getTitle())
@@ -86,6 +84,6 @@ public class BookController {
 
         UpdatedBookDto updatedBookDto = commandService.update(mapper);
 
-        return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), updatedBookDto));
+        return ResponseEntity.ok().body(new SuccessResponse(HttpStatus.OK.value(), updatedBookDto));
     }
 }
