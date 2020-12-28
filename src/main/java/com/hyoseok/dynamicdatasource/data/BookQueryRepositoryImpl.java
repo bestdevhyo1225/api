@@ -80,8 +80,7 @@ public class BookQueryRepositoryImpl extends QuerydslRepositorySupport implement
             return new PageImpl<>(pagination.fetch(), pageable, fixedTotalCount);
         }
 
-        // 2. 페이지 버튼을 사용한 경우
-        // count 쿼리를 실행한다.
+        // 2. 페이지 버튼을 사용한 경우, count 쿼리를 실행한다.
         long totalCount = pagination.fetchCount();
 
         /*
