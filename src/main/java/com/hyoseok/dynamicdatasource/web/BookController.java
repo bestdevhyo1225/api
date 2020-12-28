@@ -32,22 +32,22 @@ public class BookController {
     private final BookCommandService commandService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<SuccessResponse<FindBookDto>> findBook(@PathVariable("id") Long bookId) {
+    public ResponseEntity<SuccessResponse<?>> findBook(@PathVariable("id") Long bookId) {
         return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBook(bookId)));
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<SuccessResponse<FindBookDetailDto>> findBookDetail(@PathVariable("id") Long bookId) {
+    public ResponseEntity<SuccessResponse<?>> findBookDetail(@PathVariable("id") Long bookId) {
         return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBookLeftJoin(bookId)));
     }
 
     @GetMapping
-    public ResponseEntity<SuccessResponse<List<FindBookDto>>> findBooks() {
+    public ResponseEntity<SuccessResponse<?>> findBooks() {
         return ResponseEntity.ok().body(new SuccessResponse<>(HttpStatus.OK.value(), queryService.findBooks()));
     }
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<CreatedBookDto>> create(@RequestBody @Valid CreateBookRequest request) {
+    public ResponseEntity<SuccessResponse<?>> create(@RequestBody @Valid CreateBookRequest request) {
         CreateBookMapper bookMapper = CreateBookMapper.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
@@ -76,7 +76,7 @@ public class BookController {
     }
 
     @PatchMapping
-    public ResponseEntity<SuccessResponse<UpdatedBookDto>> update(@RequestBody @Valid UpdateBookRequest request) {
+    public ResponseEntity<SuccessResponse<?>> update(@RequestBody @Valid UpdateBookRequest request) {
         UpdateBookMapper mapper = UpdateBookMapper.builder()
                 .bookId(request.getBookId())
                 .title(request.getTitle())
