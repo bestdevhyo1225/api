@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class SuccessResponse {
-    private final int status;
+    private final String status = "success";
     private final Object data;
 }

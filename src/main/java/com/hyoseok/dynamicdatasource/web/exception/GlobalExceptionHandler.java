@@ -14,16 +14,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { NotFoundBookException.class })
     public ResponseEntity<ErrorResponse> handle(NotFoundBookException exception) {
         return new ResponseEntity<>(
-                new ErrorResponse(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()),
-                HttpStatus.NOT_FOUND
+                new ErrorResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()), HttpStatus.NOT_FOUND
         );
     }
 
     @ExceptionHandler(value = { MethodArgumentNotValidException.class })
     public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException exception) {
         return new ResponseEntity<>(
-                new ErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()),
-                HttpStatus.BAD_REQUEST
+                new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()), HttpStatus.BAD_REQUEST
         );
     }
 }
