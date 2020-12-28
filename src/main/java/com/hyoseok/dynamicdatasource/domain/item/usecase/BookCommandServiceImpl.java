@@ -10,6 +10,7 @@ import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookDescriptionMap
 import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookImageMapper;
 import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookMapper;
 import com.hyoseok.dynamicdatasource.domain.item.mapper.UpdateBookMapper;
+import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +54,7 @@ public class BookCommandServiceImpl implements BookCommandService {
     @Override
     public UpdatedBookDto update(UpdateBookMapper mapper) {
         Book book = bookRepository.findById(mapper.getBookId())
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않습니다."));
+                .orElseThrow(NotFoundBookException::new);
 
         book.change(mapper.getTitle(), mapper.getAuthor(), mapper.getPrice());
 

@@ -7,6 +7,7 @@ import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookImage;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
+import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class BookQueryServiceImpl implements BookQueryService {
     @Override
     public FindBookDetailDto findBookLeftJoin(Long bookId) {
         Book book = bookQueryRepository.findBookLeftJoin(bookId)
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않습니다."));
+                .orElseThrow(NotFoundBookException::new);
 
         List<FindBookImageDto> bookImageDtos = book.getBookImages().stream()
                 .map(bookImage ->
@@ -50,7 +51,7 @@ public class BookQueryServiceImpl implements BookQueryService {
     @Override
     public FindBookDto findBook(Long bookId) {
         Book findBook = bookRepository.findById(bookId)
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않습니다."));
+                .orElseThrow(NotFoundBookException::new);
 
         return FindBookDto.builder()
                 .bookId(bookId)
