@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.data.book;
+package com.hyoseok.dynamicdatasource.data;
 
 import com.hyoseok.dynamicdatasource.data.CorrectedPageRequest;
 import com.hyoseok.dynamicdatasource.domain.item.dto.BookSearchResult;
