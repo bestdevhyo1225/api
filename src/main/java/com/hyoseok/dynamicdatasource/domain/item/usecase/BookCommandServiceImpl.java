@@ -33,11 +33,11 @@ public class BookCommandServiceImpl implements BookCommandService {
                 .build();
 
         List<BookImage> bookImages = bookImageCommands.stream()
-                .map(bookImageMapper ->
+                .map(bookImageCommand ->
                         BookImage.builder()
-                                .kinds(bookImageMapper.getKinds())
-                                .imageUrl(bookImageMapper.getImageUrl())
-                                .sortOrder(bookImageMapper.getSortOrder())
+                                .kinds(bookImageCommand.getKinds())
+                                .imageUrl(bookImageCommand.getImageUrl())
+                                .sortOrder(bookImageCommand.getSortOrder())
                                 .build()
                 )
                 .collect(Collectors.toList());
