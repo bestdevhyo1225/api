@@ -12,7 +12,6 @@ import com.hyoseok.dynamicdatasource.web.request.CreateBookRequest;
 import com.hyoseok.dynamicdatasource.web.request.UpdateBookRequest;
 import com.hyoseok.dynamicdatasource.web.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
