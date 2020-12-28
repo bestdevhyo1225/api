@@ -1,11 +1,10 @@
 package com.hyoseok.dynamicdatasource.web;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.CreatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.UpdatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookDescriptionMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookImageMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.UpdateBookMapper;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCreationResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookModificationResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.BookCommandService;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.BookQueryService;
 import com.hyoseok.dynamicdatasource.web.request.CreateBookRequest;
@@ -39,26 +38,30 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<SuccessResponse> findBooks() {
-        return ResponseEntity.ok().body(new SuccessResponse(queryService.findBooks()));
+    public ResponseEntity<SuccessResponse> findBooks(@RequestParam("useSearchBtn") boolean useSearchBtn,
+                                                     @RequestParam("pageNumber") int pageNumber,
+                                                     @RequestParam("pageSize") int pageSize) {
+        return ResponseEntity.ok().body(
+                new SuccessResponse(queryService.findBooksByPagination(useSearchBtn, pageNumber, pageSize))
+        );
     }
 
     @PostMapping
     public ResponseEntity<SuccessResponse> create(@RequestBody @Valid CreateBookRequest request) {
-        CreateBookMapper bookMapper = CreateBookMapper.builder()
+        BookCommand bookCommand = BookCommand.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
                 .price(request.getPrice())
                 .build();
 
-        CreateBookDescriptionMapper bookDescriptionMapper = CreateBookDescriptionMapper.builder()
+        BookDescriptionCommand bookDescriptionCommand = BookDescriptionCommand.builder()
                 .contents(request.getContents())
                 .build();
 
 
-        List<CreateBookImageMapper> bookImageMappers = request.getImages().stream()
+        List<BookImageCommand> bookImageCommands = request.getImages().stream()
                 .map(createBookImageRequest ->
-                        CreateBookImageMapper.builder()
+                        BookImageCommand.builder()
                                 .kinds(createBookImageRequest.getKinds())
                                 .imageUrl(createBookImageRequest.getImageUrl())
                                 .sortOrder(createBookImageRequest.getSortOrder())
@@ -66,23 +69,23 @@ public class BookController {
                 )
                 .collect(Collectors.toList());
 
-        CreatedBookDto createdBookDto = commandService.create(bookMapper, bookDescriptionMapper, bookImageMappers);
+        BookCreationResult bookCreationResult = commandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
 
-        return ResponseEntity.created(URI.create("/books/" + createdBookDto.getBookId()))
-                .body(new SuccessResponse(createdBookDto));
+        return ResponseEntity.created(URI.create("/books/" + bookCreationResult.getBookId()))
+                .body(new SuccessResponse(bookCreationResult));
     }
 
     @PatchMapping
     public ResponseEntity<SuccessResponse> update(@RequestBody @Valid UpdateBookRequest request) {
-        UpdateBookMapper mapper = UpdateBookMapper.builder()
+        BookCommand bookCommand = BookCommand.builder()
                 .bookId(request.getBookId())
                 .title(request.getTitle())
                 .author(request.getAuthor())
                 .price(request.getPrice())
                 .build();
 
-        UpdatedBookDto updatedBookDto = commandService.update(mapper);
+        BookModificationResult bookModificationResult = commandService.update(bookCommand);
 
-        return ResponseEntity.ok().body(new SuccessResponse(updatedBookDto));
+        return ResponseEntity.ok().body(new SuccessResponse(bookModificationResult));
     }
 }

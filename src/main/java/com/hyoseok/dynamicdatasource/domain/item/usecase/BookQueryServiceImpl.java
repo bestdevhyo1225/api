@@ -1,19 +1,20 @@
 package com.hyoseok.dynamicdatasource.domain.item.usecase;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.FindBookDetailDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.FindBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.FindBookImageDto;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookDetailSearchResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookSearchResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageSearchResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookPaginationResult;
 import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
-import com.hyoseok.dynamicdatasource.domain.item.entity.BookImage;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,54 +26,48 @@ public class BookQueryServiceImpl implements BookQueryService {
     private final BookQueryRepository bookQueryRepository;
 
     @Override
-    public FindBookDetailDto findBookLeftJoin(Long bookId) {
-        Book book = bookQueryRepository.findBookLeftJoin(bookId)
-                .orElseThrow(NotFoundBookException::new);
+    public BookPaginationResult findBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize) {
+        Page<BookSearchResult> pagination = bookQueryRepository.findBooksByPagination(PageRequest.of(pageNumber, pageSize), useSearchBtn);
 
-        List<FindBookImageDto> bookImageDtos = book.getBookImages().stream()
+        return BookPaginationResult.builder()
+                .books(pagination.getContent())
+                .pageNumber(pagination.getNumber())
+                .pageSize(pagination.getSize())
+                .totalCount(pagination.getTotalElements())
+                .build();
+    }
+
+    @Override
+    public BookDetailSearchResult findBookLeftJoin(Long bookId) {
+        Book book = bookQueryRepository.findBookLeftJoin(bookId).orElseThrow(NotFoundBookException::new);
+
+        List<BookImageSearchResult> bookImageSearchResults = book.getBookImages().stream()
                 .map(bookImage ->
-                        FindBookImageDto.builder()
+                        BookImageSearchResult.builder()
                                 .imageId(bookImage.getId())
                                 .imageUrl(bookImage.getImageUrl())
                                 .build())
                 .collect(Collectors.toList());
 
-        return FindBookDetailDto.builder()
+        return BookDetailSearchResult.builder()
                 .bookId(bookId)
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .price(book.getPrice())
                 .contents(book.getBookDescription().getContents())
-                .images(bookImageDtos)
+                .images(bookImageSearchResults)
                 .build();
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public FindBookDto findBook(Long bookId) {
-        Book findBook = bookRepository.findById(bookId)
-                .orElseThrow(NotFoundBookException::new);
+    public BookSearchResult findBook(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(NotFoundBookException::new);
 
-        return FindBookDto.builder()
+        return BookSearchResult.builder()
                 .bookId(bookId)
-                .title(findBook.getTitle())
-                .author(findBook.getAuthor())
-                .price(findBook.getPrice())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .price(book.getPrice())
                 .build();
-    }
-
-    @Override
-    public List<FindBookDto> findBooks() {
-        List<Book> books = bookRepository.findAll();
-
-        return books.stream()
-                .map(book ->
-                        FindBookDto.builder()
-                                .bookId(book.getId())
-                                .title(book.getTitle())
-                                .author(book.getAuthor())
-                                .price(book.getPrice())
-                                .build())
-                .collect(Collectors.toList());
     }
 }

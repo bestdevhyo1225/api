@@ -1,10 +1,13 @@
 package com.hyoseok.dynamicdatasource.domain.item.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor
-public class CreatedBookDto {
-    private final Long bookId;
+public class BookImageSearchResult {
+    private final Long imageId;
+    private final String imageUrl;
 }

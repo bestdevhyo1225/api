@@ -1,13 +1,13 @@
-package com.hyoseok.dynamicdatasource.domain.item.mapper;
+package com.hyoseok.dynamicdatasource.domain.item.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @Builder
-@AllArgsConstructor
-public class UpdateBookMapper {
+@RequiredArgsConstructor
+public class BookCommand {
     private final Long bookId;
     private final String title;
     private final String author;

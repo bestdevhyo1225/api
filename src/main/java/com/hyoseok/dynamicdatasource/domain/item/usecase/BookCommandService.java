@@ -1,17 +1,16 @@
 package com.hyoseok.dynamicdatasource.domain.item.usecase;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.CreatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.UpdatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookDescriptionMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookImageMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.UpdateBookMapper;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCreationResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookModificationResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
 
 import java.util.List;
 
 public interface BookCommandService {
-    CreatedBookDto create(CreateBookMapper bookMapper,
-                          CreateBookDescriptionMapper bookDescriptionMapper,
-                          List<CreateBookImageMapper> bookImageMappers);
-    UpdatedBookDto update(UpdateBookMapper mapper);
+    BookCreationResult create(BookCommand bookCommand,
+                              BookDescriptionCommand bookDescriptionCommand,
+                              List<BookImageCommand> bookImageCommands);
+    BookModificationResult update(BookCommand bookCommand);
 }

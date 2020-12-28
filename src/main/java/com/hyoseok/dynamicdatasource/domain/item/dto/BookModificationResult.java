@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class FindBookImageDto {
-    private final Long imageId;
-    private final String imageUrl;
+public class BookModificationResult {
+    private final String title;
+    private final String author;
+    private final int price;
 }

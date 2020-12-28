@@ -1,22 +1,20 @@
 package com.hyoseok.dynamicdatasource.domain.item.usecase;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.CreatedBookDto;
-import com.hyoseok.dynamicdatasource.domain.item.dto.UpdatedBookDto;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCreationResult;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookModificationResult;
 import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookDescription;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookImage;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookDescriptionMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookImageMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.CreateBookMapper;
-import com.hyoseok.dynamicdatasource.domain.item.mapper.UpdateBookMapper;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
+import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
 import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +25,14 @@ public class BookCommandServiceImpl implements BookCommandService {
     private final BookRepository bookRepository;
 
     @Override
-    public CreatedBookDto create(CreateBookMapper bookMapper,
-                                 CreateBookDescriptionMapper bookDescriptionMapper,
-                                 List<CreateBookImageMapper> bookImageMappers) {
+    public BookCreationResult create(BookCommand bookCommand,
+                                     BookDescriptionCommand bookDescriptionCommand,
+                                     List<BookImageCommand> bookImageCommands) {
         BookDescription bookDescription = BookDescription.builder()
-                .contents(bookDescriptionMapper.getContents())
+                .contents(bookDescriptionCommand.getContents())
                 .build();
 
-        List<BookImage> bookImages = bookImageMappers.stream()
+        List<BookImage> bookImages = bookImageCommands.stream()
                 .map(bookImageMapper ->
                         BookImage.builder()
                                 .kinds(bookImageMapper.getKinds())
@@ -45,20 +43,20 @@ public class BookCommandServiceImpl implements BookCommandService {
                 .collect(Collectors.toList());
 
         Book savedBook = bookRepository.save(
-                Book.create(bookMapper.getTitle(), bookMapper.getAuthor(), bookMapper.getPrice(), bookDescription, bookImages)
+                Book.create(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice(), bookDescription, bookImages)
         );
 
-        return new CreatedBookDto(savedBook.getId());
+        return new BookCreationResult(savedBook.getId());
     }
 
     @Override
-    public UpdatedBookDto update(UpdateBookMapper mapper) {
-        Book book = bookRepository.findById(mapper.getBookId())
+    public BookModificationResult update(BookCommand bookCommand) {
+        Book book = bookRepository.findById(bookCommand.getBookId())
                 .orElseThrow(NotFoundBookException::new);
 
-        book.change(mapper.getTitle(), mapper.getAuthor(), mapper.getPrice());
+        book.change(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice());
 
-        return UpdatedBookDto.builder()
+        return BookModificationResult.builder()
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .price(book.getPrice())
