@@ -1,6 +1,6 @@
 package com.hyoseok.dynamicdatasource.web.exception;
 
-import com.hyoseok.dynamicdatasource.domain.exception.NotFoundBookException;
+import com.hyoseok.dynamicdatasource.domain.exception.*;
 import com.hyoseok.dynamicdatasource.web.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
