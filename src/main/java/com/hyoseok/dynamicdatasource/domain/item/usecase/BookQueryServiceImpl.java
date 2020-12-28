@@ -7,7 +7,7 @@ import com.hyoseok.dynamicdatasource.domain.item.dto.BookPaginationResult;
 import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
+import com.hyoseok.dynamicdatasource.domain.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

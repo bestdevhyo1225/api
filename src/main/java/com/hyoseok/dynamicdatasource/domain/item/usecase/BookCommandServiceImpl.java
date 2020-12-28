@@ -9,7 +9,7 @@ import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
 import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
 import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
 import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
-import com.hyoseok.dynamicdatasource.domain.item.usecase.exception.NotFoundBookException;
+import com.hyoseok.dynamicdatasource.domain.exception.NotFoundBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

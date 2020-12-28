@@ -1,5 +1,6 @@
-package com.hyoseok.dynamicdatasource.data;
+package com.hyoseok.dynamicdatasource.data.book;
 
+import com.hyoseok.dynamicdatasource.data.CorrectedPageRequest;
 import com.hyoseok.dynamicdatasource.domain.item.dto.BookSearchResult;
 import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
 import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
@@ -11,7 +12,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -73,7 +73,7 @@ public class BookQueryRepositoryImpl extends QuerydslRepositorySupport implement
 
         JPQLQuery<BookSearchResult> pagination = querydsl().applyPagination(pageable, query);
 
-        // 1. 검색 버튼을 사용한 경우
+        // 1. 검색 버튼을 사용한 경우, count 쿼리를 실행하지 않는다. 대신 totalCount = 100을 반환한다.
         if (useSearchBtn) {
             int fixedPageSize = 10;
             int fixedTotalCount = fixedPageSize * pageable.getPageSize();
@@ -81,31 +81,20 @@ public class BookQueryRepositoryImpl extends QuerydslRepositorySupport implement
         }
 
         // 2. 페이지 버튼을 사용한 경우
+        // count 쿼리를 실행한다.
         long totalCount = pagination.fetchCount();
 
-        // 데이터 건 수를 초과한 페이지 버튼 클릭시 보정
-        Pageable pageRequest = exchangePageRequest(pageable, totalCount);
+        /*
+        * 전체 데이터 수를 초과한 요청이 있을 수 있기 때문에 PageRequest를 보정한다.
+        * 전체 데이터 수 47개, 요청한 pageNumber가 7이라면, 71 ~ 80번의 데이터를 가져와야 하는데 없기 때문에 보정을 해줘야 한다.
+        * */
+        Pageable pageRequest = new CorrectedPageRequest(pageable, totalCount);
 
         return new PageImpl<>(querydsl().applyPagination(pageRequest, query).fetch(), pageRequest, totalCount);
     }
 
     private BooleanExpression bookIdEq(Long bookId) {
         return book.id.eq(bookId);
-    }
-
-    private Pageable exchangePageRequest(Pageable pageable, long totalCount) {
-        int pageNumber = pageable.getPageNumber();
-        int pageSize = pageable.getPageSize();
-
-        long requestCount = (long)pageNumber * pageSize;
-
-        // DB에 있는 전체 데이터 수가 요청한 데이터의 수보다 큰 경우, 그냥 반환한다.
-        if (totalCount > requestCount) return pageable;
-
-        int requestPageNumber = (int)Math.ceil((double) totalCount / pageNumber);
-        log.debug("requestPageNumber {}", requestPageNumber);
-
-        return PageRequest.of(requestPageNumber, pageSize);
     }
 
     private Querydsl querydsl() {
