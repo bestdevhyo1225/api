@@ -2,6 +2,10 @@
 
 Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동시 잘 적용되는지 테스트 하기 위함
 
+<br>
+
+## Framework & Library
+
 - Spring Boot (Gradle)
 - Spring Web
 - Spring Data JPA
