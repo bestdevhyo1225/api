@@ -1,9 +1,8 @@
 package com.hyoseok.dynamicdatasource.data;
 
-import com.hyoseok.dynamicdatasource.data.CorrectedPageRequest;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookSearchResult;
-import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
-import com.hyoseok.dynamicdatasource.domain.item.entity.BookQueryRepository;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookSearchResult;
+import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
+import com.hyoseok.dynamicdatasource.domain.entity.item.BookQueryRepository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;

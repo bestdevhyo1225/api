@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.item.dto;
+package com.hyoseok.dynamicdatasource.domain.dto.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BookImageSearchResult {
-    private final Long imageId;
+public class BookImageCommand {
+    private final String kinds;
     private final String imageUrl;
+    private final int sortOrder;
 }

@@ -1,12 +1,12 @@
 package com.hyoseok.dynamicdatasource.web;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookCreationResult;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookModificationResult;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
-import com.hyoseok.dynamicdatasource.domain.item.usecase.BookCommandService;
-import com.hyoseok.dynamicdatasource.domain.item.usecase.BookQueryService;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookCreationResult;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookModificationResult;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookDescriptionCommand;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageCommand;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookCommand;
+import com.hyoseok.dynamicdatasource.domain.usecase.item.BookCommandService;
+import com.hyoseok.dynamicdatasource.domain.usecase.item.BookQueryService;
 import com.hyoseok.dynamicdatasource.web.request.CreateBookRequest;
 import com.hyoseok.dynamicdatasource.web.request.UpdateBookRequest;
 import com.hyoseok.dynamicdatasource.web.response.SuccessResponse;

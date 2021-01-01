@@ -1,15 +1,15 @@
-package com.hyoseok.dynamicdatasource.domain.item.usecase;
+package com.hyoseok.dynamicdatasource.domain.usecase.item;
 
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookCreationResult;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookModificationResult;
-import com.hyoseok.dynamicdatasource.domain.item.entity.Book;
-import com.hyoseok.dynamicdatasource.domain.item.entity.BookDescription;
-import com.hyoseok.dynamicdatasource.domain.item.entity.BookImage;
-import com.hyoseok.dynamicdatasource.domain.item.entity.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookDescriptionCommand;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookImageCommand;
-import com.hyoseok.dynamicdatasource.domain.item.dto.BookCommand;
-import com.hyoseok.dynamicdatasource.domain.exception.NotFoundBookException;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookCreationResult;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookModificationResult;
+import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
+import com.hyoseok.dynamicdatasource.domain.entity.item.BookDescription;
+import com.hyoseok.dynamicdatasource.domain.entity.item.BookImage;
+import com.hyoseok.dynamicdatasource.domain.entity.item.BookRepository;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookDescriptionCommand;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageCommand;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookCommand;
+import com.hyoseok.dynamicdatasource.domain.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

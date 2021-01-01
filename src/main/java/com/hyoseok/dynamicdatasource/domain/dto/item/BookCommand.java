@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.item.dto;
+package com.hyoseok.dynamicdatasource.domain.dto.item;
 
 import lombok.Builder;
 import lombok.Getter;
