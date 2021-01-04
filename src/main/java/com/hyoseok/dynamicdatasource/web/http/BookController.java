@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.web;
+package com.hyoseok.dynamicdatasource.web.http;
 
 import com.hyoseok.dynamicdatasource.domain.dto.item.BookCreationResult;
 import com.hyoseok.dynamicdatasource.domain.dto.item.BookModificationResult;
@@ -7,9 +7,9 @@ import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageCommand;
 import com.hyoseok.dynamicdatasource.domain.dto.item.BookCommand;
 import com.hyoseok.dynamicdatasource.domain.usecase.item.BookCommandService;
 import com.hyoseok.dynamicdatasource.domain.usecase.item.BookQueryService;
-import com.hyoseok.dynamicdatasource.web.request.CreateBookRequest;
-import com.hyoseok.dynamicdatasource.web.request.UpdateBookRequest;
-import com.hyoseok.dynamicdatasource.web.response.SuccessResponse;
+import com.hyoseok.dynamicdatasource.web.http.request.CreateBookRequest;
+import com.hyoseok.dynamicdatasource.web.http.request.UpdateBookRequest;
+import com.hyoseok.dynamicdatasource.web.http.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.web.response;
+package com.hyoseok.dynamicdatasource.web.http.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

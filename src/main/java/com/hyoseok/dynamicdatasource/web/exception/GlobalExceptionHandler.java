@@ -1,7 +1,7 @@
 package com.hyoseok.dynamicdatasource.web.exception;
 
 import com.hyoseok.dynamicdatasource.domain.exception.*;
-import com.hyoseok.dynamicdatasource.web.response.ErrorResponse;
+import com.hyoseok.dynamicdatasource.web.http.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
