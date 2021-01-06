@@ -3,17 +3,19 @@ package com.hyoseok.dynamicdatasource.domain.dto.item;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class BookDetailSearchResult {
-    private final Long bookId;
-    private final String title;
-    private final String author;
-    private final int price;
-    private final String contents;
-    private final List<BookImageSearchResult> images;
+    private Long bookId;
+    private String title;
+    private String author;
+    private int price;
+    private String contents;
+    private List<BookImageSearchResult> images;
 }
