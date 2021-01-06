@@ -4,15 +4,23 @@ Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동
 
 <br>
 
-## Framework & Library
+## Framework & Library & ETC
+
+`Framework & Library`
 
 - Spring Boot (Gradle)
 - Spring Web
 - Spring Data JPA
+- Spring Data Redis
 - Querydsl
 - JDK 11
 - JUnit 5
 - ArchUnit (JUnit 5)
+  
+`ETC`
+
+- Global Exception Handler
+- Logging Interceptor
 
 <br>
 
@@ -23,6 +31,8 @@ Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동
 <br>
 
 ## 테스트 결과
+
+### MySQL - Master / Slave 테스트
 
 > Insert, Update, Delete는 Master를 통해서 진행된다. (`@Transactional`)
 
@@ -48,6 +58,19 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 <br>
 
-## Todo
+### Redis 테스트
 
-- [ ] : 다중 Slave 구성하기
+> `@Cachable`, `@CachePut` 어노테이션이 있는 메소드는 데이터를 `Redis`에 캐시한다.
+
+첫 번째 조회를 하면, `MySQL`에서 데이터를 가져오고, `Redis`에 캐시한다.
+
+![image](https://user-images.githubusercontent.com/23515771/103762063-0d47fe00-505b-11eb-9f36-765e2907acd2.png)
+
+<img width="1212" alt="스크린샷 2021-01-06 오후 8 11 37" src="https://user-images.githubusercontent.com/23515771/103762422-9c551600-505b-11eb-8844-271cf3da598c.png">
+
+두 번째 조회를 하면, `Redis`에서 데이터를 가져오고, `Logging`만 출력한다.
+
+<img width="1011" alt="스크린샷 2021-01-06 오후 8 12 22" src="https://user-images.githubusercontent.com/23515771/103762488-b5f65d80-505b-11eb-9ff1-4aa000b9765a.png">
+
+
+
