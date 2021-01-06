@@ -51,7 +51,7 @@ public class BookCommandServiceImpl implements BookCommandService {
     @Override
     @CachePut(cacheNames = "Book", key = "#bookCommand.bookId")
     public BookResult update(BookCommand bookCommand) {
-        log.info("Book update() called");
+        log.info("updateBook() called");
 
         Book book = bookRepository.findById(bookCommand.getBookId()).orElseThrow(NotFoundBookException::new);
 

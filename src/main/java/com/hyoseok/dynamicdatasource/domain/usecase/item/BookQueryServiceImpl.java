@@ -31,6 +31,8 @@ public class BookQueryServiceImpl implements BookQueryService {
     @Override
     @Cacheable(cacheNames = "BookPagination")
     public BookPaginationResult findBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize) {
+        log.info("findBooksByPagination() called");
+
         Page<BookResult> pagination = bookQueryRepository.findBooksByPagination(PageRequest.of(pageNumber, pageSize), useSearchBtn);
 
         return BookPaginationResult.builder()
@@ -44,6 +46,8 @@ public class BookQueryServiceImpl implements BookQueryService {
     @Override
     @Cacheable(cacheNames = "BookDetail")
     public BookDetailResult findBookLeftJoin(Long bookId) {
+        log.info("findBookLeftJoin() called");
+
         Book book = bookQueryRepository.findBookLeftJoin(bookId).orElseThrow(NotFoundBookException::new);
 
         List<BookImageSearchResult> bookImageSearchResults = book.getBookImages().stream()
@@ -67,7 +71,7 @@ public class BookQueryServiceImpl implements BookQueryService {
     @Override
     @Cacheable(cacheNames = "Book")
     public BookResult findBook(Long bookId) {
-        log.info("Book find() called");
+        log.info("findBook() called");
 
         Book book = bookRepository.findById(bookId).orElseThrow(NotFoundBookException::new);
 
