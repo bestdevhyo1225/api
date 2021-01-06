@@ -1,6 +1,8 @@
-# Dynamic Datasource (Replication - Master/Slave)
+# Dynamic Datasource (Replication - Master/Slave), Redis
 
-Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동시 잘 적용되는지 테스트 하기 위함
+- Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동시 잘 적용되는지 테스트
+
+- Redis를 구축하고, 잘 동작하는지 테스트
 
 <br>
 
