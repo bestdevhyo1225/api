@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookCreationResult {
+public class BookCreatedResult {
     private Long bookId;
 }

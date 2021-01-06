@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookDetailSearchResult {
+public class BookDetailResult {
     private Long bookId;
     private String title;
     private String author;

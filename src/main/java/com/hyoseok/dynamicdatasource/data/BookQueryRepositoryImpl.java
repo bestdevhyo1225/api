@@ -1,6 +1,6 @@
 package com.hyoseok.dynamicdatasource.data;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookSearchResult;
+import com.hyoseok.dynamicdatasource.domain.dto.item.BookResult;
 import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
 import com.hyoseok.dynamicdatasource.domain.entity.item.BookQueryRepository;
 import com.querydsl.core.types.Projections;
@@ -56,11 +56,11 @@ public class BookQueryRepositoryImpl extends QuerydslRepositorySupport implement
     }
 
     @Override
-    public Page<BookSearchResult> findBooksByPagination(Pageable pageable, boolean useSearchBtn) {
-        JPAQuery<BookSearchResult> query = queryFactory
+    public Page<BookResult> findBooksByPagination(Pageable pageable, boolean useSearchBtn) {
+        JPAQuery<BookResult> query = queryFactory
                 .select(
                         Projections.constructor(
-                                BookSearchResult.class,
+                                BookResult.class,
                                 book.id,
                                 book.title,
                                 book.author,
@@ -70,7 +70,7 @@ public class BookQueryRepositoryImpl extends QuerydslRepositorySupport implement
                 .from(book)
                 .orderBy(book.id.desc());
 
-        JPQLQuery<BookSearchResult> pagination = querydsl().applyPagination(pageable, query);
+        JPQLQuery<BookResult> pagination = querydsl().applyPagination(pageable, query);
 
         // 1. 검색 버튼을 사용한 경우, count 쿼리를 실행하지 않는다. 대신 totalCount = 100을 반환한다.
         if (useSearchBtn) {

@@ -1,10 +1,6 @@
 package com.hyoseok.dynamicdatasource.web.http;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookCreationResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookModificationResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookDescriptionCommand;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageCommand;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookCommand;
+import com.hyoseok.dynamicdatasource.domain.dto.item.*;
 import com.hyoseok.dynamicdatasource.domain.usecase.item.BookCommandService;
 import com.hyoseok.dynamicdatasource.domain.usecase.item.BookQueryService;
 import com.hyoseok.dynamicdatasource.web.http.request.CreateBookRequest;
@@ -69,10 +65,10 @@ public class BookController {
                 )
                 .collect(Collectors.toList());
 
-        BookCreationResult bookCreationResult = commandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
+        BookCreatedResult bookCreatedResult = commandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
 
-        return ResponseEntity.created(URI.create("/books/" + bookCreationResult.getBookId()))
-                .body(new SuccessResponse(bookCreationResult));
+        return ResponseEntity.created(URI.create("/books/" + bookCreatedResult.getBookId()))
+                .body(new SuccessResponse(bookCreatedResult));
     }
 
     @PatchMapping
@@ -84,8 +80,8 @@ public class BookController {
                 .price(request.getPrice())
                 .build();
 
-        BookModificationResult bookModificationResult = commandService.update(bookCommand);
+        BookResult bookResult = commandService.update(bookCommand);
 
-        return ResponseEntity.ok().body(new SuccessResponse(bookModificationResult));
+        return ResponseEntity.ok().body(new SuccessResponse(bookResult));
     }
 }

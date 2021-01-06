@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookSearchResult {
+public class BookResult {
     private Long bookId;
     private String title;
     private String author;

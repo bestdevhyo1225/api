@@ -1,15 +1,14 @@
 package com.hyoseok.dynamicdatasource.domain.dto.item;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookCommand {
-    private final Long bookId;
-    private final String title;
-    private final String author;
-    private final int price;
+    private Long bookId;
+    private String title;
+    private String author;
+    private int price;
 }

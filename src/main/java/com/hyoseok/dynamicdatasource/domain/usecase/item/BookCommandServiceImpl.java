@@ -1,16 +1,14 @@
 package com.hyoseok.dynamicdatasource.domain.usecase.item;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookCreationResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookModificationResult;
+import com.hyoseok.dynamicdatasource.domain.dto.item.*;
 import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
 import com.hyoseok.dynamicdatasource.domain.entity.item.BookDescription;
 import com.hyoseok.dynamicdatasource.domain.entity.item.BookImage;
 import com.hyoseok.dynamicdatasource.domain.entity.item.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookDescriptionCommand;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageCommand;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookCommand;
 import com.hyoseok.dynamicdatasource.domain.exception.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class BookCommandServiceImpl implements BookCommandService {
@@ -25,7 +24,7 @@ public class BookCommandServiceImpl implements BookCommandService {
     private final BookRepository bookRepository;
 
     @Override
-    public BookCreationResult create(BookCommand bookCommand,
+    public BookCreatedResult create(BookCommand bookCommand,
                                      BookDescriptionCommand bookDescriptionCommand,
                                      List<BookImageCommand> bookImageCommands) {
         BookDescription bookDescription = BookDescription.builder()
@@ -46,16 +45,20 @@ public class BookCommandServiceImpl implements BookCommandService {
                 Book.create(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice(), bookDescription, bookImages)
         );
 
-        return new BookCreationResult(savedBook.getId());
+        return new BookCreatedResult(savedBook.getId());
     }
 
     @Override
-    public BookModificationResult update(BookCommand bookCommand) {
+    @CachePut(cacheNames = "Book", key = "#bookCommand.bookId")
+    public BookResult update(BookCommand bookCommand) {
+        log.info("Book update() called");
+
         Book book = bookRepository.findById(bookCommand.getBookId()).orElseThrow(NotFoundBookException::new);
 
         book.change(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice());
 
-        return BookModificationResult.builder()
+        return BookResult.builder()
+                .bookId(book.getId())
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .price(book.getPrice())
