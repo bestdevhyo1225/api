@@ -1,8 +1,8 @@
-# Dynamic Datasource (Replication - Master/Slave), Redis
+# Test API
 
 - Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동시 잘 적용되는지 테스트
 
-- Redis를 구축하고, 잘 동작하는지 테스트
+- Redis를 구축하고, Spring Boot에서 잘 연동되고, 동작하는지 테스트
 
 <br>
 
@@ -13,7 +13,7 @@
 - Spring Boot (Gradle)
 - Spring Web
 - Spring Data JPA
-- Spring Data Redis
+- Spring Data Redis (Lettuce)
 - Querydsl
 - JDK 11
 - JUnit 5
