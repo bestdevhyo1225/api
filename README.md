@@ -4,6 +4,8 @@
 
 - Redis를 구축하고, Spring Boot에서 잘 연동되고, 동작하는지 테스트
 
+- 운영 환경(`Production`, `Stage`, `Dev`)별로 CI / CD 구축하기
+
 <br>
 
 ## Framework & Library & ETC
