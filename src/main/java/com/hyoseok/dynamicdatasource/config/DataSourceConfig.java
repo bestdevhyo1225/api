@@ -15,8 +15,10 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Profile(value = "!test") // active가 test이면 제외하고, 나머지 모두 적용
@@ -26,15 +28,25 @@ import java.util.Map;
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.master")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.write")
     public DataSource writeDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        HikariDataSource hikariDataSource = DataSourceBuilder.create()
+                .type(HikariDataSource.class).build();
+
+        hikariDataSource.setPoolName("HikariWritePool");
+
+        return hikariDataSource;
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.slave")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.read")
     public DataSource readDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        HikariDataSource hikariDataSource = DataSourceBuilder.create()
+                .type(HikariDataSource.class).build();
+
+        hikariDataSource.setPoolName("HikariReadPool");
+
+        return hikariDataSource;
     }
 
     /*
@@ -58,7 +70,7 @@ public class DataSourceConfig {
     @Primary
     @Bean
     public DataSource dataSource(@Qualifier("routingDataSource") DataSource routingDataSource) {
-        // routingDataSource을 등록시켜, 연결할 때마다 Master / Slave를 분기시키는 역할을 한다.
+        // routingDataSource을 등록시켜, 연결할 때마다 Write / Read를 분기시키는 역할을 한다.
         return new LazyConnectionDataSourceProxy(routingDataSource);
     }
 }

@@ -1,17 +1,24 @@
 spring:
   datasource:
-    master:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:9030/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-      username: masteruser
-      password: masterpassword
-      maximum-pool-size: 20
-    slave:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-      username: slaveuser
-      password: slavepassword
-      maximum-pool-size: 30
+    hikari:
+      write:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:9030/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+        username: masteruser
+        password: masterpassword
+        maximum-pool-size: 20
+        maximum-idle: 20
+        max-lifetime: 18000000 # 5 hour
+        connection-timeout: 6000 # 5 second
+      read:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+        username: slaveuser
+        password: slavepassword
+        maximum-pool-size: 30
+        maximum-idle: 30
+        max-lifetime: 18000000 # 5 hour
+        connection-timeout: 5000 # 5 second
 
   jpa:
     hibernate:
