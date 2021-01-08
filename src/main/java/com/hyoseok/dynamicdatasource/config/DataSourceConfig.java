@@ -1,10 +1,13 @@
 package com.hyoseok.dynamicdatasource.config;
 
+import com.hyoseok.dynamicdatasource.config.property.ReadDatabaseProperty;
+import com.hyoseok.dynamicdatasource.config.property.WriteDatabaseProperty;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,36 +18,56 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Profile(value = "!test") // active가 test이면 제외하고, 나머지 모두 적용
+@RequiredArgsConstructor
 @EnableTransactionManagement // DataSourceTransactionManager Bean을 찾아 Transaction Manager로 사용한다.
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class}) // 기존의 DataSourceAutoConfiguration을 제외하고...
+@EnableConfigurationProperties(value = {WriteDatabaseProperty.class, ReadDatabaseProperty.class})
 @EnableJpaRepositories(basePackages = {"com.hyoseok.dynamicdatasource.domain"})
 public class DataSourceConfig {
 
+    private final WriteDatabaseProperty writeDatabaseProperty;
+    private final ReadDatabaseProperty readDatabaseProperty;
+
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.write")
     public DataSource writeDataSource() {
         HikariDataSource hikariDataSource = DataSourceBuilder.create()
-                .type(HikariDataSource.class).build();
+                .driverClassName(writeDatabaseProperty.getDriverClassName())
+                .username(writeDatabaseProperty.getUsername())
+                .password(writeDatabaseProperty.getPassword())
+                .url(writeDatabaseProperty.getJdbcUrl())
+                .type(HikariDataSource.class)
+                .build();
 
         hikariDataSource.setPoolName("HikariWritePool");
+        hikariDataSource.setMaximumPoolSize(writeDatabaseProperty.getMaximumPoolSize());
+        hikariDataSource.setMinimumIdle(writeDatabaseProperty.getMinimumIdle());
+        hikariDataSource.setMaxLifetime(writeDatabaseProperty.getMaxLifetime());
+        hikariDataSource.setConnectionTimeout(writeDatabaseProperty.getConnectionTimeout());
 
         return hikariDataSource;
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.read")
     public DataSource readDataSource() {
+        System.out.println(readDatabaseProperty.getUsername());
         HikariDataSource hikariDataSource = DataSourceBuilder.create()
-                .type(HikariDataSource.class).build();
+                .driverClassName(readDatabaseProperty.getDriverClassName())
+                .username(readDatabaseProperty.getUsername())
+                .password(readDatabaseProperty.getPassword())
+                .url(readDatabaseProperty.getJdbcUrl())
+                .type(HikariDataSource.class)
+                .build();
 
         hikariDataSource.setPoolName("HikariReadPool");
+        hikariDataSource.setMaximumPoolSize(readDatabaseProperty.getMaximumPoolSize());
+        hikariDataSource.setMinimumIdle(readDatabaseProperty.getMinimumIdle());
+        hikariDataSource.setMaxLifetime(readDatabaseProperty.getMaxLifetime());
+        hikariDataSource.setConnectionTimeout(readDatabaseProperty.getConnectionTimeout());
 
         return hikariDataSource;
     }
@@ -67,8 +90,8 @@ public class DataSourceConfig {
         return dynamicRoutingDataSource;
     }
 
-    @Primary
     @Bean
+    @Primary
     public DataSource dataSource(@Qualifier("routingDataSource") DataSource routingDataSource) {
         // routingDataSource을 등록시켜, 연결할 때마다 Write / Read를 분기시키는 역할을 한다.
         return new LazyConnectionDataSourceProxy(routingDataSource);
