@@ -38,7 +38,11 @@ show processlist\G
 > docker 컨테이너에 접속하는 쉘 스크립트를 실행한다.
 
 ```shell
+# read 1 db
 ./slave1.sh
+
+# read 2 db
+./slave2.sh
 ```
 
 > 다음 명령을 입력하면, 현재 Master-Slave 상태인지 확인할 수 있다.
@@ -84,10 +88,15 @@ services:
     dock_net:
       ipv4_address: 172.16.0.10
 
-  slave:
+  slave1:
     networks:
     dock_net:
       ipv4_address: 172.16.0.11
+      
+  slave2:
+    networks:
+    dock_net:
+      ipv4_address: 172.16.0.12
 
 networks:
   dock_net:
