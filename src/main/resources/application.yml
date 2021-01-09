@@ -9,7 +9,7 @@ spring:
         maximum-pool-size: 20
         maximum-idle: 20
         max-lifetime: 18000000 # 5 hour
-        connection-timeout: 6000 # 5 second
+        connection-timeout: 5000 # 5 second
       read:
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
