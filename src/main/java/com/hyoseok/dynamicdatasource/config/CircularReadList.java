@@ -2,12 +2,12 @@ package com.hyoseok.dynamicdatasource.config;
 
 import java.util.List;
 
-public class CircularSlaveList<T> {
+public class CircularReadList<T> {
 
     private final List<T> list;
     private Integer counter = 0;
 
-    public CircularSlaveList(List<T> list) {
+    public CircularReadList(List<T> list) {
         this.list = list;
     }
 

@@ -4,7 +4,6 @@ import com.hyoseok.dynamicdatasource.config.property.ReadDatabaseProperty;
 import com.hyoseok.dynamicdatasource.config.property.WriteDatabaseProperty;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,6 +17,7 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class DataSourceConfig {
     private final ReadDatabaseProperty readDatabaseProperty;
 
     @Bean
-    public DataSource writeDataSource() {
+    public DataSource writeDataSource() throws SQLException {
         HikariDataSource hikariDataSource = DataSourceBuilder.create()
                 .driverClassName(writeDatabaseProperty.getDriverClassName())
                 .username(writeDatabaseProperty.getUsername())
@@ -47,39 +47,51 @@ public class DataSourceConfig {
         hikariDataSource.setMaximumPoolSize(writeDatabaseProperty.getMaximumPoolSize());
         hikariDataSource.setMaxLifetime(writeDatabaseProperty.getMaxLifetime());
         hikariDataSource.setConnectionTimeout(writeDatabaseProperty.getConnectionTimeout());
+        hikariDataSource.getConnection().isValid(Long.valueOf(writeDatabaseProperty.getConnectionTimeout()).intValue());
 
         return hikariDataSource;
     }
 
     @Bean
-    public DataSource readDataSource() {
-        System.out.println(readDatabaseProperty.getUsername());
-        HikariDataSource hikariDataSource = DataSourceBuilder.create()
-                .driverClassName(readDatabaseProperty.getDriverClassName())
-                .username(readDatabaseProperty.getUsername())
-                .password(readDatabaseProperty.getPassword())
-                .url(readDatabaseProperty.getJdbcUrl())
-                .type(HikariDataSource.class)
-                .build();
+    public Map<String, DataSource> readDataSourceMap() {
+        Map<String, DataSource> dataSourceMap = new HashMap<>();
 
-        hikariDataSource.setPoolName("HikariReadPool");
-        hikariDataSource.setMaximumPoolSize(readDatabaseProperty.getMaximumPoolSize());
-        hikariDataSource.setMaxLifetime(readDatabaseProperty.getMaxLifetime());
-        hikariDataSource.setConnectionTimeout(readDatabaseProperty.getConnectionTimeout());
+        readDatabaseProperty.getList().forEach(readProperty -> {
+            HikariDataSource hikariDataSource = DataSourceBuilder.create()
+                    .driverClassName(readDatabaseProperty.getDriverClassName())
+                    .username(readDatabaseProperty.getUsername())
+                    .password(readDatabaseProperty.getPassword())
+                    .url(readProperty.getJdbcUrl())
+                    .type(HikariDataSource.class)
+                    .build();
 
-        return hikariDataSource;
+            hikariDataSource.setPoolName("HikariReadPool");
+            hikariDataSource.setMaximumPoolSize(readDatabaseProperty.getMaximumPoolSize());
+            hikariDataSource.setMaxLifetime(readDatabaseProperty.getMaxLifetime());
+            hikariDataSource.setConnectionTimeout(readDatabaseProperty.getConnectionTimeout());
+
+            try {
+                int connectionTimeout = Long.valueOf(readDatabaseProperty.getConnectionTimeout()).intValue();
+                hikariDataSource.getConnection().isValid(connectionTimeout);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+            dataSourceMap.put(readProperty.getName(),hikariDataSource);
+        });
+
+        return dataSourceMap;
     }
 
-    /*
-    * @Qualifier 어노테이션을 사용한 이유?
-    * DataSource 타입의 Bean 객체가 여러개 등록되어 있기 때문에, 상황에 따라 원하는 Bean 객체를 사용하기 위해서 설정함
-    * */
     @Bean
-    public DataSource routingDataSource(@Qualifier("writeDataSource") DataSource writeDataSource,
-                                        @Qualifier("readDataSource") DataSource readDataSource) {
+    public DataSource routingDataSource() throws SQLException {
         Map<Object, Object> dataSourceMap = new HashMap<>();
+
+        DataSource writeDataSource = writeDataSource();
+        Map<String, DataSource> readDataSourceMap = readDataSourceMap();
+
         dataSourceMap.put("write", writeDataSource);
-        dataSourceMap.put("read", readDataSource);
+        readDataSourceMap.keySet().forEach(key -> dataSourceMap.put(key, readDataSourceMap.get(key)));
 
         DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
         dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
@@ -90,8 +102,8 @@ public class DataSourceConfig {
 
     @Bean
     @Primary
-    public DataSource dataSource(@Qualifier("routingDataSource") DataSource routingDataSource) {
+    public DataSource dataSource() throws SQLException {
         // routingDataSource을 등록시켜, 연결할 때마다 Write / Read를 분기시키는 역할을 한다.
-        return new LazyConnectionDataSourceProxy(routingDataSource);
+        return new LazyConnectionDataSourceProxy(routingDataSource());
     }
 }

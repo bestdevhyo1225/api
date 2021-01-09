@@ -4,8 +4,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class DynamicRoutingDataSource extends AbstractRoutingDataSource {
+
+    private CircularReadList<String> circularReadList;
+
+    @Override
+    public void setTargetDataSources(Map<Object, Object> targetDataSources) {
+        super.setTargetDataSources(targetDataSources);
+
+        List<String> readList = targetDataSources.keySet().stream()
+                .map(Object::toString)
+                .filter(key -> key.contains("read"))
+                .collect(Collectors.toList());
+
+        circularReadList = new CircularReadList<>(readList);
+    }
 
     /*
     * ----- determineCurrentLookupKey() 메소드 -----
@@ -16,7 +34,8 @@ public class DynamicRoutingDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
         boolean isReadOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
-        log.debug("determineCurrentLookupKey() - isReadOnly : {}", isReadOnly);
-        return isReadOnly ? "slave" : "master";
+        String databaseType = isReadOnly ? circularReadList.getOne() : "write";
+        log.debug("determineCurrentLookupKey() : {}", databaseType);
+        return databaseType;
     }
 }
