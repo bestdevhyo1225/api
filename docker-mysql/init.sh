@@ -4,7 +4,8 @@
 docker build -t mymaster .
 
 # make myslave image
-docker build -t myslave .
+docker build -t myslave1 .
+docker build -t myslave2 .
 
 # execute mymaster, myslave container
 docker-compose up -d
@@ -31,3 +32,5 @@ query="change master to master_host='172.16.0.10', master_port=3306, master_user
 
 mysql -h127.0.0.1 --port 9031 -uroot -e "${query}"
 mysql -h127.0.0.1 --port 9031 -uroot -e "start slave"
+mysql -h127.0.0.1 --port 9032 -uroot -e "${query}"
+mysql -h127.0.0.1 --port 9032 -uroot -e "start slave"

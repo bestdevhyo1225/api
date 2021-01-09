@@ -16,13 +16,13 @@ services:
       dock_net:
         ipv4_address: 172.16.0.10
 
-  slave:
-    image: myslave
+  slave1:
+    image: myslave1
     volumes:
       - ./myslave/mysql-init-files/:/docker-entrypoint-initdb.d/
       - ./myslave/mysql-config-files/:/etc/mysql/conf.d
     restart: always
-    container_name: myslave
+    container_name: myslave1
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD="true"
     ports:
@@ -30,6 +30,23 @@ services:
     networks:
       dock_net:
         ipv4_address: 172.16.0.11
+    depends_on:
+      - 'master'
+
+  slave2:
+    image: myslave2
+    volumes:
+      - ./myslave/mysql-init-files/:/docker-entrypoint-initdb.d/
+      - ./myslave/mysql-config-files/:/etc/mysql/conf.d
+    restart: always
+    container_name: myslave2
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD="true"
+    ports:
+      - '9032:3306'
+    networks:
+      dock_net:
+        ipv4_address: 172.16.0.12
     depends_on:
       - 'master'
 

@@ -38,7 +38,7 @@ show processlist\G
 > docker 컨테이너에 접속하는 쉘 스크립트를 실행한다.
 
 ```shell
-./slave.sh
+./slave1.sh
 ```
 
 > 다음 명령을 입력하면, 현재 Master-Slave 상태인지 확인할 수 있다.
