@@ -15,7 +15,6 @@ public class WriteDatabaseProperty {
     private final String username;
     private final String password;
     private final int maximumPoolSize;
-    private final int minimumIdle;
     private final long maxLifetime;
     private final long connectionTimeout;
 }

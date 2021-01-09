@@ -7,7 +7,6 @@ spring:
         username: masteruser
         password: masterpassword
         maximum-pool-size: 20
-        maximum-idle: 20
         max-lifetime: 18000000 # 5 hour
         connection-timeout: 5000 # 5 second
       read:
@@ -16,7 +15,6 @@ spring:
         username: slaveuser
         password: slavepassword
         maximum-pool-size: 30
-        maximum-idle: 30
         max-lifetime: 18000000 # 5 hour
         connection-timeout: 5000 # 5 second
 

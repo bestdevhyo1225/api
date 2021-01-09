@@ -45,7 +45,6 @@ public class DataSourceConfig {
 
         hikariDataSource.setPoolName("HikariWritePool");
         hikariDataSource.setMaximumPoolSize(writeDatabaseProperty.getMaximumPoolSize());
-        hikariDataSource.setMinimumIdle(writeDatabaseProperty.getMinimumIdle());
         hikariDataSource.setMaxLifetime(writeDatabaseProperty.getMaxLifetime());
         hikariDataSource.setConnectionTimeout(writeDatabaseProperty.getConnectionTimeout());
 
@@ -65,7 +64,6 @@ public class DataSourceConfig {
 
         hikariDataSource.setPoolName("HikariReadPool");
         hikariDataSource.setMaximumPoolSize(readDatabaseProperty.getMaximumPoolSize());
-        hikariDataSource.setMinimumIdle(readDatabaseProperty.getMinimumIdle());
         hikariDataSource.setMaxLifetime(readDatabaseProperty.getMaxLifetime());
         hikariDataSource.setConnectionTimeout(readDatabaseProperty.getConnectionTimeout());
 
