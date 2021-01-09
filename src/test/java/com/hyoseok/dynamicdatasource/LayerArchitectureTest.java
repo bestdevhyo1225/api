@@ -11,7 +11,7 @@ public class LayerArchitectureTest {
 
     @ArchTest
     static final ArchRule 레이어_의존성을_테스트한다 = layeredArchitecture()
-            .layer("Controller").definedBy("com.hyoseok.dynamicdatasource.web")
+            .layer("Controller").definedBy("com.hyoseok.dynamicdatasource.web.http")
             .layer("Service").definedBy("com.hyoseok.dynamicdatasource.domain.usecase.*")
             .layer("Repository").definedBy("com.hyoseok.dynamicdatasource.domain.entity.*")
             .layer("Data").definedBy("com.hyoseok.dynamicdatasource.data")
