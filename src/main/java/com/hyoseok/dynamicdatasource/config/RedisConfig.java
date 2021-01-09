@@ -1,16 +1,15 @@
 package com.hyoseok.dynamicdatasource.config;
 
-import io.lettuce.core.RedisURI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager.RedisCacheManagerBuilder;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 
@@ -19,6 +18,7 @@ import java.time.Duration;
 import static org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair.*;
 
 @Configuration
+@Profile(value = "!test")
 @EnableCaching(proxyTargetClass = true)
 public class RedisConfig extends CachingConfigurerSupport {
 
