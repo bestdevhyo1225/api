@@ -38,7 +38,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheManager cacheManager() {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofSeconds(20L));
+                .entryTtl(Duration.ofSeconds(20L))
+                .disableCachingNullValues();
 
         return RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory())
                 .cacheDefaults(redisCacheConfiguration)
