@@ -12,6 +12,7 @@ import org.springframework.data.redis.cache.RedisCacheManager.RedisCacheManagerB
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
@@ -37,8 +38,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeKeysWith(fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofSeconds(20L))
+                .entryTtl(Duration.ofSeconds(180L))
                 .disableCachingNullValues();
 
         return RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory())
