@@ -14,6 +14,7 @@
 
 - Spring Boot (Gradle)
 - Spring Web
+- Spring Security
 - Spring Data JPA
 - Spring Data Redis (Lettuce)
 - Querydsl
