@@ -41,6 +41,9 @@ server:
     uri-encoding: UTF-8
   port: 8080
 
+jwt:
+  secret-key: api-secret-2021
+
 logging:
   level:
     com.hyoseok.dynamicdatasource: debug

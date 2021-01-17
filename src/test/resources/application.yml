@@ -15,5 +15,8 @@ spring:
       hibernate:
         format_sql: true
 
+jwt:
+  secret-key: api-secret-2021
+
 #logging.level:
 #  org.hibernate.SQL: debug
