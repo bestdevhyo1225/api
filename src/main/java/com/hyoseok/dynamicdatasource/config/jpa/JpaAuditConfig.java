@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.config;
+package com.hyoseok.dynamicdatasource.config.jpa;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

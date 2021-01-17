@@ -1,7 +1,7 @@
-package com.hyoseok.dynamicdatasource.config;
+package com.hyoseok.dynamicdatasource.config.rdbms;
 
-import com.hyoseok.dynamicdatasource.config.property.ReadDatabaseProperty;
-import com.hyoseok.dynamicdatasource.config.property.WriteDatabaseProperty;
+import com.hyoseok.dynamicdatasource.config.rdbms.property.ReadDatabaseProperty;
+import com.hyoseok.dynamicdatasource.config.rdbms.property.WriteDatabaseProperty;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

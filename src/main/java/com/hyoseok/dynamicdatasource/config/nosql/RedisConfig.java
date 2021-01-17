@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.config;
+package com.hyoseok.dynamicdatasource.config.nosql;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;

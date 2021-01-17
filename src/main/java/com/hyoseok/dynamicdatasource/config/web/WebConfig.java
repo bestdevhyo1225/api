@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.config;
+package com.hyoseok.dynamicdatasource.config.web;
 
 import com.hyoseok.dynamicdatasource.web.http.interceptor.LoggingInterceptor;
 import lombok.RequiredArgsConstructor;

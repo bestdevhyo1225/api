@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.config;
+package com.hyoseok.dynamicdatasource.config.rdbms;
 
 import java.util.List;
 
