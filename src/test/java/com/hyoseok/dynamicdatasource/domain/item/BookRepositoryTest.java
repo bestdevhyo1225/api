@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.entity.item;
+package com.hyoseok.dynamicdatasource.domain.item;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

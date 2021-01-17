@@ -1,12 +1,13 @@
-package com.hyoseok.dynamicdatasource.domain.dto.item;
+package com.hyoseok.dynamicdatasource.usecase.item.dto;
 
 import lombok.*;
+
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookCommand {
+public class BookResult {
     private Long bookId;
     private String title;
     private String author;

@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.entity.order;
+package com.hyoseok.dynamicdatasource.domain.order;
 
 import lombok.AccessLevel;
 import lombok.Getter;

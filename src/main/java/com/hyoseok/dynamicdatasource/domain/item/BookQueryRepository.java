@@ -1,6 +1,6 @@
-package com.hyoseok.dynamicdatasource.domain.entity.item;
+package com.hyoseok.dynamicdatasource.domain.item;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookResult;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

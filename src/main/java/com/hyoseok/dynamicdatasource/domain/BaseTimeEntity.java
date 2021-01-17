@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.entity;
+package com.hyoseok.dynamicdatasource.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.dto.item;
+package com.hyoseok.dynamicdatasource.usecase.item.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookImageSearchResult {
-    private Long imageId;
+public class BookImageCommand {
+    private String kinds;
     private String imageUrl;
+    private int sortOrder;
 }

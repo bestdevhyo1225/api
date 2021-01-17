@@ -1,6 +1,6 @@
-package com.hyoseok.dynamicdatasource.domain.entity.item;
+package com.hyoseok.dynamicdatasource.domain.item;
 
-import com.hyoseok.dynamicdatasource.domain.entity.BaseEntity;
+import com.hyoseok.dynamicdatasource.domain.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 

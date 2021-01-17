@@ -1,9 +1,8 @@
 package com.hyoseok.dynamicdatasource.data;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookResult;
-import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookQueryRepository;
-import com.hyoseok.dynamicdatasource.domain.entity.item.QBook;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
+import com.hyoseok.dynamicdatasource.domain.item.Book;
+import com.hyoseok.dynamicdatasource.domain.item.BookQueryRepository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.hyoseok.dynamicdatasource.domain.entity.item.QBook.*;
+import static com.hyoseok.dynamicdatasource.domain.item.QBook.*;
 
 @Repository
 @Slf4j

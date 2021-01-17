@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.entity.item;
+package com.hyoseok.dynamicdatasource.domain.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,11 +1,11 @@
-package com.hyoseok.dynamicdatasource.domain.usecase.item;
+package com.hyoseok.dynamicdatasource.usecase.item;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.*;
-import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookDescription;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookImage;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.exception.*;
+import com.hyoseok.dynamicdatasource.domain.item.Book;
+import com.hyoseok.dynamicdatasource.domain.item.BookDescription;
+import com.hyoseok.dynamicdatasource.domain.item.BookImage;
+import com.hyoseok.dynamicdatasource.domain.item.BookRepository;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.*;
+import com.hyoseok.dynamicdatasource.usecase.item.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachePut;
@@ -25,8 +25,8 @@ public class BookCommandServiceImpl implements BookCommandService {
 
     @Override
     public BookCreatedResult create(BookCommand bookCommand,
-                                     BookDescriptionCommand bookDescriptionCommand,
-                                     List<BookImageCommand> bookImageCommands) {
+                                    BookDescriptionCommand bookDescriptionCommand,
+                                    List<BookImageCommand> bookImageCommands) {
         BookDescription bookDescription = BookDescription.builder()
                 .contents(bookDescriptionCommand.getContents())
                 .build();

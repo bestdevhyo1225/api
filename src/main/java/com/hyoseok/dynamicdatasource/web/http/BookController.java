@@ -1,8 +1,8 @@
 package com.hyoseok.dynamicdatasource.web.http;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.*;
-import com.hyoseok.dynamicdatasource.domain.usecase.item.BookCommandService;
-import com.hyoseok.dynamicdatasource.domain.usecase.item.BookQueryService;
+import com.hyoseok.dynamicdatasource.usecase.item.BookCommandService;
+import com.hyoseok.dynamicdatasource.usecase.item.BookQueryService;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.*;
 import com.hyoseok.dynamicdatasource.web.http.request.CreateBookRequest;
 import com.hyoseok.dynamicdatasource.web.http.request.UpdateBookRequest;
 import com.hyoseok.dynamicdatasource.web.http.response.SuccessResponse;

@@ -1,13 +1,13 @@
-package com.hyoseok.dynamicdatasource.domain.usecase.item;
+package com.hyoseok.dynamicdatasource.usecase.item;
 
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookDetailResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookImageSearchResult;
-import com.hyoseok.dynamicdatasource.domain.dto.item.BookPaginationResult;
-import com.hyoseok.dynamicdatasource.domain.entity.item.Book;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookQueryRepository;
-import com.hyoseok.dynamicdatasource.domain.entity.item.BookRepository;
-import com.hyoseok.dynamicdatasource.domain.exception.*;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDetailResult;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookImageSearchResult;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookPaginationResult;
+import com.hyoseok.dynamicdatasource.domain.item.Book;
+import com.hyoseok.dynamicdatasource.domain.item.BookQueryRepository;
+import com.hyoseok.dynamicdatasource.domain.item.BookRepository;
+import com.hyoseok.dynamicdatasource.usecase.item.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
