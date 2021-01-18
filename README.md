@@ -1,8 +1,6 @@
 # Api
 
-## Framework & Library & ETC
-
-`Framework & Library`
+**`Framework & Library`**
 
 - Spring Boot (Gradle)
 - Spring Web
@@ -14,7 +12,7 @@
 - JUnit 5
 - ArchUnit (JUnit 5)
   
-`ETC`
+**`ETC`**
 
 - Global Exception Handler
 - Logging Interceptor
