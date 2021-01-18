@@ -30,7 +30,7 @@
 
 - `Data Layer`는 `Domain Layer`을 의존하고 있으며, Repository의 구현체들이 위치하고 있다.
 
-- `Domain Layer` 내부에서는 의존하는 상황이 발생하지만, 다른 외부의 Layer는 절대로 의존하지 않는다.
+- `Domain Layer` 내부에서는 의존하는 상황이 발생하지만, 다른 Layer는 절대로 의존하지 않는다.
 
 ![image](https://user-images.githubusercontent.com/23515771/104912115-365b7d80-59cf-11eb-87cd-fb3035bfa507.png)
 
