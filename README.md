@@ -81,4 +81,12 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 ### 시스템 아키텍쳐
 
+- `Web`은 `Usecase`에 의존하고 있다.
+
+- `Usecase`는 `Domain`을 의존하고 있다.
+
+- `Domain`은 어떤 Layer도 의존하지 않는다.
+
+- `Data`는 `Domain`을 의존하고 있으며, Repository의 구현체들이 위치하고 있다.
+
 ![image](https://user-images.githubusercontent.com/23515771/104912115-365b7d80-59cf-11eb-87cd-fb3035bfa507.png)
