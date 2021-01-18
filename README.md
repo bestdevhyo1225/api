@@ -77,5 +77,8 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 <img width="1011" alt="스크린샷 2021-01-06 오후 8 12 22" src="https://user-images.githubusercontent.com/23515771/103762488-b5f65d80-505b-11eb-9ff1-4aa000b9765a.png">
 
+<br>
 
+### 시스템 아키텍쳐
 
+![image](https://user-images.githubusercontent.com/23515771/104912115-365b7d80-59cf-11eb-87cd-fb3035bfa507.png)
