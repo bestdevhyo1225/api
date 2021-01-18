@@ -1,12 +1,4 @@
-# Dev & Test
-
-- Docker로 Master/Slave MySQL을 직접 구성해보고, Spring Boot에서 연동시 잘 적용되는지 테스트
-
-- Redis를 구축하고, Spring Boot에서 잘 연동되고, 동작하는지 테스트
-
-- 운영 환경(`Production`, `Stage`, `Dev`)별로 CI / CD 구축하기
-
-<br>
+# Api
 
 ## Framework & Library & ETC
 
