@@ -1,6 +1,12 @@
 # Api
 
-**`Framework & Library`**
+- MySQL Replication 구축
+- Redis Cache 구축
+- Custom LoggingInterceptor 구현
+- Global Exception Handler 구현
+- Jwt 기반 Security 구축
+
+## Framework & Library
 
 - Spring Boot (Gradle)
 - Spring Web
@@ -11,11 +17,6 @@
 - JDK 11
 - JUnit 5
 - ArchUnit (JUnit 5)
-  
-**`ETC`**
-
-- Global Exception Handler
-- Logging Interceptor
 
 <br>
 
@@ -25,9 +26,7 @@
 
 <br>
 
-## 테스트 결과
-
-### MySQL - Master / Slave 테스트
+## MySQL Replication 테스트
 
 > Insert, Update, Delete는 Master를 통해서 진행된다. (`@Transactional`)
 
@@ -53,7 +52,7 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 <br>
 
-### Redis 테스트
+## Redis 테스트
 
 > `@Cachable`, `@CachePut` 어노테이션이 있는 메소드는 데이터를 `Redis`에 캐시한다.
 
@@ -69,7 +68,7 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 <br>
 
-### 시스템 아키텍쳐
+## 시스템 아키텍쳐
 
 - `Web`은 `Usecase`에 의존하고 있다.
 
