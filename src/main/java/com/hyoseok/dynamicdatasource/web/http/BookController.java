@@ -25,6 +25,7 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse> findBook(@PathVariable("id") Long bookId) {
+        System.out.println("check");
         return ResponseEntity.ok().body(new SuccessResponse(queryService.findBook(bookId)));
     }
 
@@ -66,6 +67,8 @@ public class BookController {
                 .collect(Collectors.toList());
 
         BookCreatedResult bookCreatedResult = commandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
+
+        if(bookCreatedResult == null) bookCreatedResult = new BookCreatedResult(0L);
 
         return ResponseEntity.created(URI.create("/books/" + bookCreatedResult.getBookId()))
                 .body(new SuccessResponse(bookCreatedResult));
