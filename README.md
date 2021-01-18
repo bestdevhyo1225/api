@@ -91,7 +91,7 @@ Select 쿼리의 경우, Log에 `determineCurrentLookupKey() - isReadOnly : true
 
 ![image](https://user-images.githubusercontent.com/23515771/104912115-365b7d80-59cf-11eb-87cd-fb3035bfa507.png)
 
-> ArchUnit 활용하여 아키텍쳐 테스트 완료
+> ArchUnit 라이브러리를 활용하여, 아키텍쳐 테스트 완료
 
 - [LayerArchitectureTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/LayerArchitectureTest.java)
 
