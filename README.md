@@ -53,5 +53,6 @@
 > Docker 기반의 Redis
 
 ```shell
+# 명령을 통해 Docker Redis가 실행된다.
 docker-compose -f docker-redis/docker-compose.yml up -d
 ```
