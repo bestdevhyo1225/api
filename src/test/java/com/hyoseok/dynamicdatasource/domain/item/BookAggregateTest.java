@@ -8,8 +8,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("AggregateBook 테스트")
-class AggregateBookTest {
+@DisplayName("BookAggregate 테스트")
+class BookAggregateTest {
 
     @Test
     void BookDescription_엔티티를_생성한다 () {
@@ -76,5 +76,62 @@ class AggregateBookTest {
         assertThat(book.getBookImages().get(0).getKinds()).isEqualTo(bookImages.get(0).getKinds());
         assertThat(book.getBookImages().get(0).getImageUrl()).isEqualTo(bookImages.get(0).getImageUrl());
         assertThat(book.getBookImages().get(0).getSortOrder()).isEqualTo(bookImages.get(0).getSortOrder());
+    }
+
+    @Test
+    void Book_Description을_수정한다() {
+        // given
+        BookDescription bookDescription = BookDescription.builder()
+                .contents("contents")
+                .build();
+
+        // when
+        String changeContents = "change contents";
+        bookDescription.change(changeContents);
+
+        // then
+        assertThat(bookDescription.getContents()).isEqualTo(changeContents);
+    }
+
+    @Test
+    void Book_Image를_수정한다() {
+        // given
+        BookImage bookImage = BookImage.builder()
+                .kinds("kinds")
+                .imageUrl("imageUrl")
+                .sortOrder(0)
+                .build();
+
+        // when
+        String changeKinds = "change kinds";
+        String changeImageUrl = "change imageUrl";
+        int changeSortOrder = 1;
+        bookImage.change(changeKinds, changeImageUrl, changeSortOrder);
+
+        // then
+        assertThat(bookImage.getKinds()).isEqualTo(changeKinds);
+        assertThat(bookImage.getImageUrl()).isEqualTo(changeImageUrl);
+        assertThat(bookImage.getSortOrder()).isEqualTo(changeSortOrder);
+    }
+
+    @Test
+    void Book을_수정한다() {
+        // given
+        Book book = Book.builder()
+                .title("title")
+                .author("author")
+                .price(25000)
+                .build();
+
+        // when
+        String changeTitle = "change title";
+        String changeAuthor = "change author";
+        int changePrice = 35000;
+        book.change(changeTitle, changeAuthor, changePrice);
+
+        // then
+        assertThat(book.getTitle()).isEqualTo(changeTitle);
+        assertThat(book.getAuthor()).isEqualTo(changeAuthor);
+        assertThat(book.getPrice()).isEqualTo(changePrice);
     }
 }
