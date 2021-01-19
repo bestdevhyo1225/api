@@ -41,6 +41,11 @@ public class Book extends BaseEntity {
         this.price = price;
     }
 
+    // Test를 위해 setter를 만듬...
+    public void changeBookId(Long bookId) {
+        this.id = bookId;
+    }
+
     public void changeBookDescription(BookDescription bookDescription) {
         this.bookDescription = bookDescription;
         bookDescription.setBook(this);
