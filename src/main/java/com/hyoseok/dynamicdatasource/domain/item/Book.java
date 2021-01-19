@@ -48,12 +48,12 @@ public class Book extends BaseEntity {
 
     public void changeBookDescription(BookDescription bookDescription) {
         this.bookDescription = bookDescription;
-        bookDescription.setBook(this);
+        bookDescription.changeBook(this);
     }
 
     public void addBookImage(BookImage bookImage) {
         this.bookImages.add(bookImage);
-        bookImage.setBook(this);
+        bookImage.changeBook(this);
     }
 
     public void change(String title, String author, int price) {

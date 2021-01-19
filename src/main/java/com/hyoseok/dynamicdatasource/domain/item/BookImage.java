@@ -39,7 +39,13 @@ public class BookImage {
         this.sortOrder = sortOrder;
     }
 
-    public void setBook(Book book) {
+    public void changeBook(Book book) {
         this.book = book;
+    }
+
+    public void change(String kinds, String imageUrl, int sortOrder) {
+        this.kinds = kinds;
+        this.imageUrl = imageUrl;
+        this.sortOrder = sortOrder;
     }
 }

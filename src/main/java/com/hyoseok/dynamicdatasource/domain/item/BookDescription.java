@@ -38,7 +38,11 @@ public class BookDescription {
         this.contents = contents;
     }
 
-    public void setBook(Book book) {
+    public void changeBook(Book book) {
         this.book = book;
+    }
+
+    public void change(String contents) {
+        this.contents = contents;
     }
 }
