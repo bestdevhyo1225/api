@@ -1,16 +1,15 @@
 package com.hyoseok.dynamicdatasource.usecase.item;
 
 import com.hyoseok.dynamicdatasource.domain.item.Book;
-import com.hyoseok.dynamicdatasource.domain.item.BookDescription;
-import com.hyoseok.dynamicdatasource.domain.item.BookImage;
 import com.hyoseok.dynamicdatasource.domain.item.BookRepository;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCreatedResult;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDescriptionCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookImageCommand;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
@@ -22,23 +21,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
+@DisplayName("BookCommandService 테스트")
 @ExtendWith(MockitoExtension.class)
 class BookCommandServiceTest {
 
     @Mock
     private BookRepository bookRepository;
 
-    private BookCommandService bookCommandService;
-
-    @BeforeEach
-    void setUp() {
-        bookCommandService = new BookCommandServiceImpl(bookRepository);
-    }
+    @InjectMocks
+    private BookCommandServiceImpl bookCommandService;
 
     @Test
     void Book_등록에_성공한다() {
         // given
-        Long bookId = 1L;
+        final Long bookId = 1L;
+
         given(bookRepository.save(any(Book.class))).will((Answer<Book>) invocation -> {
             Book mockBook = invocation.getArgument(0);
             mockBook.changeBookId(bookId);
