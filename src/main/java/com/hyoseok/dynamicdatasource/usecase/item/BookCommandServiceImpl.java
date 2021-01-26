@@ -8,6 +8,7 @@ import com.hyoseok.dynamicdatasource.usecase.item.dto.*;
 import com.hyoseok.dynamicdatasource.usecase.item.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,7 @@ public class BookCommandServiceImpl implements BookCommandService {
     }
 
     @Override
-    @CachePut(cacheNames = "Book", key = "#bookCommand.bookId")
+    @CacheEvict(cacheNames = "Book", key = "#bookCommand.bookId")
     public BookResult update(BookCommand bookCommand) {
         log.info("updateBook() called");
 
