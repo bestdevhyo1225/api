@@ -25,7 +25,6 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse> findBook(@PathVariable("id") Long bookId) {
-        System.out.println("check");
         return ResponseEntity.ok().body(new SuccessResponse(queryService.findBook(bookId)));
     }
 
