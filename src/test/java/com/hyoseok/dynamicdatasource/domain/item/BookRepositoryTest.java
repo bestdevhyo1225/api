@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -14,12 +13,11 @@ import java.util.NoSuchElementException;
 @DisplayName("BookRepository 테스트")
 class BookRepositoryTest {
 
-    @PersistenceContext
+    @Autowired
     private EntityManager entityManager;
 
     @Autowired
     private BookRepository repository;
-
 
     @Test
     void Book_Entity를_조회한다() {
