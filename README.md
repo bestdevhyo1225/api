@@ -53,7 +53,7 @@
 
 - `Database Service`는 `Query Service`나 `Cache Service`에 의해서 호출되며, `Repository`를 통해 데이터베이스에 직접 조회한다.
 
-![image](https://user-images.githubusercontent.com/23515771/105954728-75b55880-60b8-11eb-8ab3-c2378442c7b5.png)
+![image](https://user-images.githubusercontent.com/23515771/105956013-7b13a280-60ba-11eb-8c36-41a7c2ba4398.png)
 
 <br>
 
