@@ -6,6 +6,6 @@ import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
 
 public interface BookDatabaseService {
     BookPaginationResult findBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize);
-    BookDetailResult findBookLeftJoin(Long bookId);
+    BookDetailResult findBookDetail(Long bookId);
     BookResult findBook(Long bookId);
 }

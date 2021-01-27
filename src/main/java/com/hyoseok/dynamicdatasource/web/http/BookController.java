@@ -30,7 +30,7 @@ public class BookController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<SuccessResponse> findBookDetail(@PathVariable("id") Long bookId) {
-        return ResponseEntity.ok().body(new SuccessResponse(queryService.findBookLeftJoin(bookId)));
+        return ResponseEntity.ok().body(new SuccessResponse(queryService.findBookDetail(bookId)));
     }
 
     @GetMapping

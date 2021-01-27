@@ -59,10 +59,6 @@
 
 ![image](https://user-images.githubusercontent.com/23515771/105956013-7b13a280-60ba-11eb-8c36-41a7c2ba4398.png)
 
-> ArchUnit 라이브러리를 활용하여, Query Service 내부 의존 관계 테스트 완료
-
-- [ClassDependencyTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/ClassDependencyTest.java)
-
 <br>
 
 ## MySQL Replication 및 Redis 실행 방법
