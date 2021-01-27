@@ -8,6 +8,7 @@ import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCreatedResult;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDescriptionCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookImageCommand;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,8 +32,12 @@ class BookCommandServiceTest {
     @Mock
     private BookRepository bookRepository;
 
-    @InjectMocks
-    private BookCommandServiceImpl bookCommandService;
+    private BookCommandService bookCommandService;
+
+    @BeforeEach
+    void setUp() {
+        bookCommandService = new BookCommandServiceImpl(bookRepository);
+    }
 
     @Test
     void Book_등록에_성공한다() {
