@@ -42,8 +42,8 @@ public class BookJpaService implements BookDatabaseService {
     }
 
     @Override
-    public BookDetailResult findBookLeftJoin(Long bookId) {
-        log.info("findBookLeftJoin() called");
+    public BookDetailResult findBookDetail(Long bookId) {
+        log.info("findBookDetail() called");
 
         Book book = bookQueryRepository.findBookLeftJoin(bookId).orElseThrow(NotFoundBookException::new);
 

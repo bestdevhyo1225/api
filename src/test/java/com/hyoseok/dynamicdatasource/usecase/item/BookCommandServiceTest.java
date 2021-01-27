@@ -3,21 +3,19 @@ package com.hyoseok.dynamicdatasource.usecase.item;
 import com.hyoseok.dynamicdatasource.domain.item.Book;
 import com.hyoseok.dynamicdatasource.domain.item.BookRepository;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCommand;
-import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCreatedResult;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDescriptionCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookImageCommand;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -28,19 +26,17 @@ class BookCommandServiceTest {
     @Mock
     private BookRepository bookRepository;
 
-    @InjectMocks
-    private BookCommandServiceImpl bookCommandService;
+    private BookCommandService bookCommandService;
+
+    @BeforeEach
+    void setUp() {
+        bookCommandService = new BookCommandServiceImpl(bookRepository);
+    }
 
     @Test
     void Book_등록에_성공한다() {
         // given
-        final Long bookId = 1L;
-
-        given(bookRepository.save(any(Book.class))).will((Answer<Book>) invocation -> {
-            Book mockBook = invocation.getArgument(0);
-            mockBook.changeBookId(bookId);
-            return mockBook;
-        });
+        given(bookRepository.save(any(Book.class))).will(AdditionalAnswers.returnsFirstArg());
 
         // when
         BookCommand bookCommand = BookCommand.builder()
@@ -61,9 +57,11 @@ class BookCommandServiceTest {
                         .build()
         );
 
-        BookCreatedResult bookCreatedResult = bookCommandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
+        bookCommandService.create(bookCommand, bookDescriptionCommand, bookImageCommands);
 
         // then
-        assertThat(bookCreatedResult.getBookId()).isEqualTo(bookId);
+        then(bookRepository)
+                .should()
+                .save(any(Book.class));
     }
 }
