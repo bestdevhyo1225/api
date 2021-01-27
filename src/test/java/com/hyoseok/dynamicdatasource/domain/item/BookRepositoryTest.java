@@ -1,6 +1,5 @@
 package com.hyoseok.dynamicdatasource.domain.item;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,9 @@ class BookRepositoryTest {
     @Autowired
     private BookRepository repository;
 
-    @BeforeEach
-    void init() {
+
+    @Test
+    void Book_Entity를_조회한다() {
         String title = "JPA";
         String author = "author1";
         int price = 25000;
@@ -34,10 +34,7 @@ class BookRepositoryTest {
         entityManager.persist(book);
         entityManager.flush();
         entityManager.clear();
-    }
 
-    @Test
-    void Book_Entity를_조회한다() {
         Long bookId = 1L;
         repository.findById(bookId)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않음"));
