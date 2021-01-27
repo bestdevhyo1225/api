@@ -1,5 +1,9 @@
 # Api
 
+![API CI](https://github.com/bestdevhyo1225/api/workflows/API%20CI/badge.svg?branch=stage)
+
+<br>
+
 - MySQL Replication 구축
 - Redis Cache 구축
 - Custom LoggingInterceptor 구현
