@@ -37,7 +37,7 @@
 
 ![image](https://user-images.githubusercontent.com/23515771/104912115-365b7d80-59cf-11eb-87cd-fb3035bfa507.png)
 
-> ArchUnit 라이브러리를 활용하여, 아키텍쳐 테스트 완료
+> ArchUnit 라이브러리를 활용하여, Layer 의존 관계 테스트 완료
 
 - [LayerArchitectureTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/LayerArchitectureTest.java)
 
@@ -54,6 +54,10 @@
 - `Database Service`는 `Query Service`나 `Cache Service`에 의해서 호출되며, `Repository`를 통해 데이터베이스에 직접 조회한다.
 
 ![image](https://user-images.githubusercontent.com/23515771/105956013-7b13a280-60ba-11eb-8c36-41a7c2ba4398.png)
+
+> ArchUnit 라이브러리를 활용하여, Query Service 내부 의존 관계 테스트 완료
+
+- [ClassDependencyTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/ClassDependencyTest.java)
 
 <br>
 
