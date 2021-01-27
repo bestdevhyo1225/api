@@ -110,7 +110,7 @@ class BookControllerTest {
 
     @Test
     void 검색_버튼을_눌렀다면_검색_방식으로_조회한다() throws Exception {
-        // when
+        // given
         boolean useSearchBtn = true;
         int pageNumber = 0;
         int pageSize = 10;
@@ -157,7 +157,7 @@ class BookControllerTest {
 
     @Test
     void 페이지_버튼을_눌렀다면_페이지_방식으로_조회한다() throws Exception {
-        // when
+        // given
         boolean useSearchBtn = false;
         int pageNumber = 0;
         int pageSize = 10;
@@ -204,7 +204,7 @@ class BookControllerTest {
 
     @Test
     void 토큰이_없으면_401_에러가_발생한다() throws Exception {
-        // when
+        // given
         List<CreateBookImageRequest> createBookImageRequests = Collections.singletonList(
                 new CreateBookImageRequest("kinds", "imageUrl", 0)
         );
@@ -213,6 +213,7 @@ class BookControllerTest {
                 "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
         );
 
+        // when
         ResultActions resultActions = mockMvc.perform(
                 post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -226,7 +227,7 @@ class BookControllerTest {
     @Test
     @WithMockUser(authorities = "USER")
     void 어드민_사용자가_아니면_403_에러가_발생한다() throws Exception {
-        // when
+        // given
         List<CreateBookImageRequest> createBookImageRequests = Collections.singletonList(
                 new CreateBookImageRequest("kinds", "imageUrl", 0)
         );
@@ -235,6 +236,7 @@ class BookControllerTest {
                 "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
         );
 
+        // when
         ResultActions resultActions = mockMvc.perform(
                 post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -248,7 +250,7 @@ class BookControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void 어드민_사용자는_Book을_등록한다() throws Exception {
-        // when
+        // given
         List<CreateBookImageRequest> createBookImageRequests = Collections.singletonList(
                 new CreateBookImageRequest("kinds", "imageUrl", 0)
         );
@@ -257,6 +259,7 @@ class BookControllerTest {
                 "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
         );
 
+        // when
         ResultActions resultActions = mockMvc.perform(
                 post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
