@@ -51,5 +51,5 @@ public class LayerDependencyRulesTest {
     @ArchTest
     static final ArchRule Usecase는_Domain_또는_기타_Usecase에만_의존해야합니다 =
             classes().that().resideInAPackage("..usecase.*..")
-                    .should().onlyDependOnClassesThat().resideInAnyPackage("..domain.*..", "..usecase.*..", "java..", "javax..", "org..");
+                    .should().onlyDependOnClassesThat().resideInAnyPackage("..domain.*..", "..usecase.*..", "java..", "javax..", "org..", "..netflix..");
 }

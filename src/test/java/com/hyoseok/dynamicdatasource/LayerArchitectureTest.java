@@ -14,8 +14,10 @@ public class LayerArchitectureTest {
             .layer("Web").definedBy("com.hyoseok.dynamicdatasource.web.http")
             .layer("Usecase").definedBy("com.hyoseok.dynamicdatasource.usecase.*")
             .layer("Domain").definedBy("com.hyoseok.dynamicdatasource.domain.*")
-            .layer("Data").definedBy("com.hyoseok.dynamicdatasource.data")
+            .layer("Data").definedBy("com.hyoseok.dynamicdatasource.data..")
             .whereLayer("Web").mayNotBeAccessedByAnyLayer()
             .whereLayer("Usecase").mayOnlyBeAccessedByLayers("Web")
             .whereLayer("Domain").mayOnlyBeAccessedByLayers("Usecase", "Data");
 }
+
+
