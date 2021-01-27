@@ -88,7 +88,7 @@ class BookControllerTest {
                 .images(Collections.singletonList(bookImageSearchResult))
                 .build();
 
-        given(bookQueryService.findBookLeftJoin(bookId)).willReturn(bookDetailResult);
+        given(bookQueryService.findBookDetail(bookId)).willReturn(bookDetailResult);
 
         // when
         ResultActions resultActions = mockMvc.perform(
