@@ -15,6 +15,7 @@
 - Spring Security
 - Spring Data JPA
 - Spring Data Redis (Lettuce)
+- Spring Cloud Netflix Hystrix  
 - Querydsl
 - JDK 11
 - JUnit 5
@@ -23,6 +24,8 @@
 <br>
 
 ## 시스템 아키텍쳐
+
+### Layer 의존 관계
 
 - `Web Layer`는 `Usecase Layer`에 의존하고 있다.
 
@@ -41,6 +44,16 @@
 - [LayerDependencyRulesTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/LayerDependencyRulesTest.java)
 
 - [CyclicDependencyRulesTest](https://github.com/bestdevhyo1225/api/blob/master/src/test/java/com/hyoseok/dynamicdatasource/CyclicDependencyRulesTest.java)
+
+### Query Service 내부 의존 관계
+
+- `Query Service`는 `Controller`에 의해서 호출되며, `@HystrixCommand`를 어노테이션을 통해 Cache 장애를 대응한다.
+
+- `Cache Service`는 `QueryService`에 의해서 호출되며, `@Cacheable` 어노테이션을 통해 데이터를 캐싱한다.
+
+- `Database Service`는 `Query Service`나 `Cache Service`에 의해서 호출되며, `Repository`를 통해 데이터베이스에 직접 조회한다.
+
+![image](https://user-images.githubusercontent.com/23515771/105954728-75b55880-60b8-11eb-8ab3-c2378442c7b5.png)
 
 <br>
 
