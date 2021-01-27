@@ -21,8 +21,8 @@ public class BookRedisService implements BookCacheService {
 
     @Override
     @Cacheable(cacheNames = "BookDetail")
-    public BookDetailResult findBookLeftJoin(Long bookId) {
-        return bookDatabaseService.findBookLeftJoin(bookId);
+    public BookDetailResult findBookDetail(Long bookId) {
+        return bookDatabaseService.findBookDetail(bookId);
     }
 
     @Override

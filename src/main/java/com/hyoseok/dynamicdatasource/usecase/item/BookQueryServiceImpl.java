@@ -21,19 +21,9 @@ public class BookQueryServiceImpl implements BookQueryService {
     }
 
     @Override
-    public BookPaginationResult fallbackBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize) {
-        return bookDatabaseService.findBooksByPagination(useSearchBtn, pageNumber, pageSize);
-    }
-
-    @Override
-    @HystrixCommand(fallbackMethod = "fallbackBookLeftJoin")
-    public BookDetailResult findBookLeftJoin(Long bookId) {
-        return bookCacheService.findBookLeftJoin(bookId);
-    }
-
-    @Override
-    public BookDetailResult fallbackBookLeftJoin(Long bookId) {
-        return bookDatabaseService.findBookLeftJoin(bookId);
+    @HystrixCommand(fallbackMethod = "fallbackBookDetail")
+    public BookDetailResult findBookDetail(Long bookId) {
+        return bookCacheService.findBookDetail(bookId);
     }
 
     @Override
@@ -42,8 +32,15 @@ public class BookQueryServiceImpl implements BookQueryService {
         return bookCacheService.findBook(bookId);
     }
 
-    @Override
-    public BookResult fallbackBook(Long bookId) {
+    private BookPaginationResult fallbackBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize) {
+        return bookDatabaseService.findBooksByPagination(useSearchBtn, pageNumber, pageSize);
+    }
+
+    private BookDetailResult fallbackBookDetail(Long bookId) {
+        return bookDatabaseService.findBookDetail(bookId);
+    }
+
+    private BookResult fallbackBook(Long bookId) {
         return bookDatabaseService.findBook(bookId);
     }
 }
