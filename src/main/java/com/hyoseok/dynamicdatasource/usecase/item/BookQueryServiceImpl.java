@@ -20,6 +20,7 @@ public class BookQueryServiceImpl implements BookQueryService {
         return bookCacheService.findBooksByPagination(useSearchBtn, pageNumber, pageSize);
     }
 
+    @Override
     public BookPaginationResult fallbackBooksByPagination(boolean useSearchBtn, int pageNumber, int pageSize) {
         return bookDatabaseService.findBooksByPagination(useSearchBtn, pageNumber, pageSize);
     }
