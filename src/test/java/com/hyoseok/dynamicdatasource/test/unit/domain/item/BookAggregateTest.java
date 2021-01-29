@@ -1,5 +1,8 @@
-package com.hyoseok.dynamicdatasource.domain.item;
+package com.hyoseok.dynamicdatasource.test.unit.domain.item;
 
+import com.hyoseok.dynamicdatasource.domain.item.Book;
+import com.hyoseok.dynamicdatasource.domain.item.BookDescription;
+import com.hyoseok.dynamicdatasource.domain.item.BookImage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
