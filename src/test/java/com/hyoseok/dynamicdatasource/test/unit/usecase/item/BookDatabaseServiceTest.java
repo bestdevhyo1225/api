@@ -3,6 +3,8 @@ package com.hyoseok.dynamicdatasource.test.unit.usecase.item;
 import com.hyoseok.dynamicdatasource.domain.item.*;
 import com.hyoseok.dynamicdatasource.usecase.item.BookDatabaseService;
 import com.hyoseok.dynamicdatasource.usecase.item.BookJpaService;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDetailResult;
+import com.hyoseok.dynamicdatasource.usecase.item.dto.BookPaginationResult;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
@@ -40,7 +43,7 @@ class BookDatabaseServiceTest {
     }
 
     @Test
-    void Book을_조회한다() {
+    void findBook_메소드_내부에서_findById_메소드가_수행_되었는지_행위_및_상태를_검증한다() {
         // given
         final Long bookId = 1L;
         final Book book = Book.builder()
@@ -52,16 +55,21 @@ class BookDatabaseServiceTest {
         given(bookRepository.findById(bookId)).willReturn(Optional.of(book));
 
         // when
-        bookDatabaseService.findBook(bookId);
+        final BookResult bookResult = bookDatabaseService.findBook(bookId);
 
         // then
         then(bookRepository)
                 .should()
                 .findById(bookId);
+
+        assertThat(bookResult.getBookId()).isEqualTo(1L);
+        assertThat(bookResult.getTitle()).isEqualTo("title");
+        assertThat(bookResult.getAuthor()).isEqualTo("author");
+        assertThat(bookResult.getPrice()).isEqualTo(25000);
     }
 
     @Test
-    void Book의_상세정보를_조회한다() {
+    void findBookDetail_메소드_내부에서_findBookLeftJoin_메소드가_수행_되었는지_행위_및_상태를_검증한다() {
         // given
         final Long bookId = 1L;
         final BookDescription bookDescription = BookDescription.builder()
@@ -79,28 +87,37 @@ class BookDatabaseServiceTest {
         given(bookQueryRepository.findBookLeftJoin(bookId)).willReturn(Optional.of(book));
 
         // when
-        bookDatabaseService.findBookDetail(bookId);
+        final BookDetailResult bookDetailResult = bookDatabaseService.findBookDetail(bookId);
 
         // then
         then(bookQueryRepository)
                 .should()
                 .findBookLeftJoin(bookId);
+
+        assertThat(bookDetailResult.getBookId()).isEqualTo(1L);
+        assertThat(bookDetailResult.getTitle()).isEqualTo("title");
+        assertThat(bookDetailResult.getAuthor()).isEqualTo("author");
+        assertThat(bookDetailResult.getPrice()).isEqualTo(25000);
+        assertThat(bookDetailResult.getContents()).isEqualTo("contents");
+        assertThat(bookDetailResult.getImages().get(0).getKinds()).isEqualTo("kinds");
+        assertThat(bookDetailResult.getImages().get(0).getImageUrl()).isEqualTo("imageUrl");
+        assertThat(bookDetailResult.getImages().get(0).getSortOrder()).isEqualTo(0);
     }
 
     @Test
-    void SearchBtn방식의_Pagination을_통해_Book_리스트를_조회한다() {
+    void findBooksByPagination_메소드_내부에서_findBooksByPagination_메소드가_수행_되었는지_행위_및_상태를_검증한다() {
         // given
         final boolean userSearchBtn = true;
         final int pageNumber = 0;
         final int pageSize = 10;
         final Pageable pageRequest = PageRequest.of(pageNumber, pageSize);
-        final List<BookResult> books = Collections.singletonList(
-                BookResult.builder()
-                        .title("title")
-                        .author("author")
-                        .price(25000)
-                        .build()
-        );
+        final BookResult bookResult = BookResult.builder()
+                .bookId(1L)
+                .title("title")
+                .author("author")
+                .price(25000)
+                .build();
+        final List<BookResult> books = Collections.singletonList(bookResult);
         final long totalCount = 1L;
         final Page<BookResult> pagination = new PageImpl<>(books, pageRequest, totalCount);
 
@@ -108,11 +125,19 @@ class BookDatabaseServiceTest {
                 .willReturn(pagination);
 
         // when
-        bookDatabaseService.findBooksByPagination(userSearchBtn, pageNumber, pageSize);
+        BookPaginationResult bookPaginationResult = bookDatabaseService.findBooksByPagination(userSearchBtn, pageNumber, pageSize);
 
         // then
         then(bookQueryRepository)
                 .should()
                 .findBooksByPagination(pageRequest, userSearchBtn);
+
+        assertThat(bookPaginationResult.getPageNumber()).isEqualTo(0);
+        assertThat(bookPaginationResult.getPageSize()).isEqualTo(10);
+        assertThat(bookPaginationResult.getTotalCount()).isEqualTo(1L);
+        assertThat(bookPaginationResult.getBooks().get(0).getBookId()).isEqualTo(1L);
+        assertThat(bookPaginationResult.getBooks().get(0).getTitle()).isEqualTo("title");
+        assertThat(bookPaginationResult.getBooks().get(0).getAuthor()).isEqualTo("author");
+        assertThat(bookPaginationResult.getBooks().get(0).getPrice()).isEqualTo(25000);
     }
 }
