@@ -25,9 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-@DisplayName("BookDatabaseService 테스트")
+@DisplayName("BookJpaService 테스트")
 @ExtendWith(MockitoExtension.class)
-class BookDatabaseServiceTest {
+class BookJpaServiceTest {
 
     @Mock
     private BookRepository bookRepository;
@@ -35,11 +35,11 @@ class BookDatabaseServiceTest {
     @Mock
     private BookQueryRepository bookQueryRepository;
 
-    private BookDatabaseService bookDatabaseService;
+    private BookDatabaseService bookJpaService;
 
     @BeforeEach
     void setUp() {
-        bookDatabaseService = new BookJpaService(bookRepository, bookQueryRepository);
+        bookJpaService = new BookJpaService(bookRepository, bookQueryRepository);
     }
 
     @Test
@@ -55,12 +55,10 @@ class BookDatabaseServiceTest {
         given(bookRepository.findById(bookId)).willReturn(Optional.of(book));
 
         // when
-        final BookResult bookResult = bookDatabaseService.findBook(bookId);
+        final BookResult bookResult = bookJpaService.findBook(bookId);
 
         // then
-        then(bookRepository)
-                .should()
-                .findById(bookId);
+        then(bookRepository).should().findById(bookId);
 
         assertThat(bookResult.getBookId()).isEqualTo(1L);
         assertThat(bookResult.getTitle()).isEqualTo("title");
@@ -87,12 +85,10 @@ class BookDatabaseServiceTest {
         given(bookQueryRepository.findBookLeftJoin(bookId)).willReturn(Optional.of(book));
 
         // when
-        final BookDetailResult bookDetailResult = bookDatabaseService.findBookDetail(bookId);
+        final BookDetailResult bookDetailResult = bookJpaService.findBookDetail(bookId);
 
         // then
-        then(bookQueryRepository)
-                .should()
-                .findBookLeftJoin(bookId);
+        then(bookQueryRepository).should().findBookLeftJoin(bookId);
 
         assertThat(bookDetailResult.getBookId()).isEqualTo(1L);
         assertThat(bookDetailResult.getTitle()).isEqualTo("title");
@@ -118,26 +114,24 @@ class BookDatabaseServiceTest {
                 .price(25000)
                 .build();
         final List<BookResult> books = Collections.singletonList(bookResult);
-        final long totalCount = 1L;
+        final long totalCount = 100L;
         final Page<BookResult> pagination = new PageImpl<>(books, pageRequest, totalCount);
 
         given(bookQueryRepository.findBooksByPagination(pageRequest, userSearchBtn))
                 .willReturn(pagination);
 
         // when
-        BookPaginationResult bookPaginationResult = bookDatabaseService.findBooksByPagination(userSearchBtn, pageNumber, pageSize);
+        BookPaginationResult bookPaginationResult = bookJpaService.findBooksByPagination(userSearchBtn, pageNumber, pageSize);
 
         // then
-        then(bookQueryRepository)
-                .should()
-                .findBooksByPagination(pageRequest, userSearchBtn);
+        then(bookQueryRepository).should().findBooksByPagination(pageRequest, userSearchBtn);
 
-        assertThat(bookPaginationResult.getPageNumber()).isEqualTo(0);
-        assertThat(bookPaginationResult.getPageSize()).isEqualTo(10);
-        assertThat(bookPaginationResult.getTotalCount()).isEqualTo(1L);
         assertThat(bookPaginationResult.getBooks().get(0).getBookId()).isEqualTo(1L);
         assertThat(bookPaginationResult.getBooks().get(0).getTitle()).isEqualTo("title");
         assertThat(bookPaginationResult.getBooks().get(0).getAuthor()).isEqualTo("author");
         assertThat(bookPaginationResult.getBooks().get(0).getPrice()).isEqualTo(25000);
+        assertThat(bookPaginationResult.getPageNumber()).isEqualTo(0);
+        assertThat(bookPaginationResult.getPageSize()).isEqualTo(10);
+        assertThat(bookPaginationResult.getTotalCount()).isEqualTo(100L);
     }
 }
