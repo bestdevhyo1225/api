@@ -1,9 +1,10 @@
-package com.hyoseok.dynamicdatasource.web.http;
+package com.hyoseok.dynamicdatasource.test.unit.web.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyoseok.dynamicdatasource.usecase.item.BookCommandService;
 import com.hyoseok.dynamicdatasource.usecase.item.BookQueryService;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.*;
+import com.hyoseok.dynamicdatasource.web.http.BookController;
 import com.hyoseok.dynamicdatasource.web.http.request.CreateBookImageRequest;
 import com.hyoseok.dynamicdatasource.web.http.request.CreateBookRequest;
 import org.junit.jupiter.api.DisplayName;

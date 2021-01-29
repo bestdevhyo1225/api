@@ -1,6 +1,8 @@
-package com.hyoseok.dynamicdatasource.usecase.item;
+package com.hyoseok.dynamicdatasource.test.unit.usecase.item;
 
 import com.hyoseok.dynamicdatasource.domain.item.*;
+import com.hyoseok.dynamicdatasource.usecase.item.BookDatabaseService;
+import com.hyoseok.dynamicdatasource.usecase.item.BookJpaService;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
