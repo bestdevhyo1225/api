@@ -75,8 +75,9 @@ class BookControllerTest {
     void Book_Detail을_조회한다() throws Exception {
         // given
         BookImageSearchResult bookImageSearchResult = BookImageSearchResult.builder()
-                .imageId(1L)
+                .kinds("kinds")
                 .imageUrl("imageUrl")
+                .sortOrder(0)
                 .build();
 
         Long bookId = 1L;
@@ -105,8 +106,9 @@ class BookControllerTest {
                 .andExpect(jsonPath("$.data.author").value(bookDetailResult.getAuthor()))
                 .andExpect(jsonPath("$.data.price").value(bookDetailResult.getPrice()))
                 .andExpect(jsonPath("$.data.contents").value(bookDetailResult.getContents()))
-                .andExpect(jsonPath("$.data.images[0].imageId").value(bookDetailResult.getImages().get(0).getImageId()))
-                .andExpect(jsonPath("$.data.images[0].imageUrl").value(bookDetailResult.getImages().get(0).getImageUrl()));
+                .andExpect(jsonPath("$.data.images[0].kinds").value(bookDetailResult.getImages().get(0).getKinds()))
+                .andExpect(jsonPath("$.data.images[0].imageUrl").value(bookDetailResult.getImages().get(0).getImageUrl()))
+                .andExpect(jsonPath("$.data.images[0].sortOrder").value(bookDetailResult.getImages().get(0).getSortOrder()));
     }
 
     @Test

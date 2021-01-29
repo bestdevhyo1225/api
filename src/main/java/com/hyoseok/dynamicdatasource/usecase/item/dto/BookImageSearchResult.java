@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookImageSearchResult {
-    private Long imageId;
+    private String kinds;
     private String imageUrl;
+    private int sortOrder;
 }
