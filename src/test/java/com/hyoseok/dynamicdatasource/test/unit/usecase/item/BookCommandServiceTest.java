@@ -1,7 +1,9 @@
-package com.hyoseok.dynamicdatasource.usecase.item;
+package com.hyoseok.dynamicdatasource.test.unit.usecase.item;
 
 import com.hyoseok.dynamicdatasource.domain.item.Book;
 import com.hyoseok.dynamicdatasource.domain.item.BookRepository;
+import com.hyoseok.dynamicdatasource.usecase.item.BookCommandService;
+import com.hyoseok.dynamicdatasource.usecase.item.BookCommandServiceImpl;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookDescriptionCommand;
 import com.hyoseok.dynamicdatasource.usecase.item.dto.BookImageCommand;

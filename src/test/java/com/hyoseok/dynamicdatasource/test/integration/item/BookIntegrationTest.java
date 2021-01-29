@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.integration.item;
+package com.hyoseok.dynamicdatasource.test.integration.item;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyoseok.dynamicdatasource.web.http.request.CreateBookImageRequest;

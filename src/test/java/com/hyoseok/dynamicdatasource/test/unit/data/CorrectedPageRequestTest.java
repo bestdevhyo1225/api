@@ -1,5 +1,6 @@
-package com.hyoseok.dynamicdatasource.data;
+package com.hyoseok.dynamicdatasource.test.unit.data;
 
+import com.hyoseok.dynamicdatasource.data.CorrectedPageRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

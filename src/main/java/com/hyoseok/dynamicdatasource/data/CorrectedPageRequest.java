@@ -4,7 +4,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public class CorrectedPageRequest extends PageRequest {
-    protected CorrectedPageRequest(Pageable pageable, long totalCount) {
+    public CorrectedPageRequest(Pageable pageable, long totalCount) {
         super(getPageNumber(pageable, totalCount), pageable.getPageSize(), pageable.getSort());
     }
 
