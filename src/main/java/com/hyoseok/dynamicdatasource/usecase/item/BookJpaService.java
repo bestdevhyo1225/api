@@ -50,8 +50,9 @@ public class BookJpaService implements BookDatabaseService {
         List<BookImageSearchResult> bookImageSearchResults = book.getBookImages().stream()
                 .map(bookImage ->
                         BookImageSearchResult.builder()
-                                .imageId(bookImage.getId())
+                                .kinds(bookImage.getKinds())
                                 .imageUrl(bookImage.getImageUrl())
+                                .sortOrder(bookImage.getSortOrder())
                                 .build())
                 .collect(Collectors.toList());
 
