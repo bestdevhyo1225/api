@@ -16,6 +16,7 @@ public class BookDetailResult {
     private String title;
     private String author;
     private int price;
+    private int stockQuantity;
     private String contents;
     private List<BookImageSearchResult> images;
 }

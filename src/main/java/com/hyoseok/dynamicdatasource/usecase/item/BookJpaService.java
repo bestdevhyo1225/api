@@ -61,6 +61,7 @@ public class BookJpaService implements BookDatabaseService {
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .price(book.getPrice())
+                .stockQuantity(book.getStockQuantity())
                 .contents(book.getBookDescription().getContents())
                 .images(bookImageSearchResults)
                 .build();
