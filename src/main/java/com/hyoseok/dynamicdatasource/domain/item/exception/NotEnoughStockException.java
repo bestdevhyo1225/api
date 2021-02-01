@@ -1,4 +1,4 @@
-package com.hyoseok.dynamicdatasource.domain.exception;
+package com.hyoseok.dynamicdatasource.domain.item.exception;
 
 public class NotEnoughStockException extends RuntimeException {
     public NotEnoughStockException() {

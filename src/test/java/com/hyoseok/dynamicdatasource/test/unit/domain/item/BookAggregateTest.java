@@ -3,7 +3,7 @@ package com.hyoseok.dynamicdatasource.test.unit.domain.item;
 import com.hyoseok.dynamicdatasource.domain.item.Book;
 import com.hyoseok.dynamicdatasource.domain.item.BookDescription;
 import com.hyoseok.dynamicdatasource.domain.item.BookImage;
-import com.hyoseok.dynamicdatasource.domain.exception.NotEnoughStockException;
+import com.hyoseok.dynamicdatasource.domain.item.exception.NotEnoughStockException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

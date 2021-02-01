@@ -1,7 +1,7 @@
 package com.hyoseok.dynamicdatasource.domain.item;
 
 import com.hyoseok.dynamicdatasource.domain.BaseEntity;
-import com.hyoseok.dynamicdatasource.domain.exception.NotEnoughStockException;
+import com.hyoseok.dynamicdatasource.domain.item.exception.NotEnoughStockException;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
