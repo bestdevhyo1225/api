@@ -48,6 +48,7 @@ public class BookController {
                 .title(request.getTitle())
                 .author(request.getAuthor())
                 .price(request.getPrice())
+                .stockQuantity(request.getStockQuantity())
                 .build();
 
         BookDescriptionCommand bookDescriptionCommand = BookDescriptionCommand.builder()

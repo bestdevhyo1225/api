@@ -11,4 +11,5 @@ public class BookCommand {
     private String title;
     private String author;
     private int price;
+    private int stockQuantity;
 }
