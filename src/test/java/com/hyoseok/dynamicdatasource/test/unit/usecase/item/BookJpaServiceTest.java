@@ -94,6 +94,7 @@ class BookJpaServiceTest {
         assertThat(bookDetailResult.getTitle()).isEqualTo("title");
         assertThat(bookDetailResult.getAuthor()).isEqualTo("author");
         assertThat(bookDetailResult.getPrice()).isEqualTo(25000);
+        assertThat(bookDetailResult.getStockQuantity()).isEqualTo(10);
         assertThat(bookDetailResult.getContents()).isEqualTo("contents");
         assertThat(bookDetailResult.getImages().get(0).getKinds()).isEqualTo("kinds");
         assertThat(bookDetailResult.getImages().get(0).getImageUrl()).isEqualTo("imageUrl");
