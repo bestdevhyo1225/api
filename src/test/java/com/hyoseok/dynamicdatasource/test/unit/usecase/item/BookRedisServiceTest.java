@@ -73,6 +73,7 @@ class BookRedisServiceTest {
                 .title("title")
                 .author("author")
                 .price(25000)
+                .stockQuantity(10)
                 .contents("contents")
                 .images(Collections.singletonList(bookImageSearchResult))
                 .build();
@@ -89,6 +90,7 @@ class BookRedisServiceTest {
         assertThat(bookDeatil.getTitle()).isEqualTo("title");
         assertThat(bookDeatil.getAuthor()).isEqualTo("author");
         assertThat(bookDeatil.getPrice()).isEqualTo(25000);
+        assertThat(bookDeatil.getStockQuantity()).isEqualTo(10);
         assertThat(bookDeatil.getContents()).isEqualTo("contents");
         assertThat(bookDeatil.getImages().get(0).getKinds()).isEqualTo("kinds");
         assertThat(bookDeatil.getImages().get(0).getImageUrl()).isEqualTo("imageUrl");
