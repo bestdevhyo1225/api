@@ -27,6 +27,9 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
+    private int stockQuantity;
+
     // optional -> 연관이 선택 사항인지 여부를 의미함. false로 설정하면, Null이 아닌 관계가 항상 존재해야 한다.
     @OneToOne(mappedBy = "book", fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     private BookDescription bookDescription;
@@ -35,10 +38,11 @@ public class Book extends BaseEntity {
     private final List<BookImage> bookImages = new ArrayList<>();
 
     @Builder
-    public Book(String title, String author, int price) {
+    public Book(String title, String author, int price, int stockQuantity) {
         this.title = title;
         this.author = author;
         this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 
     public void changeBookDescription(BookDescription bookDescription) {
@@ -57,13 +61,14 @@ public class Book extends BaseEntity {
         this.price = price;
     }
 
-    public static Book create(String title, String author, int price,
+    public static Book create(String title, String author, int price, int stockQuantity,
                               BookDescription bookDescription, List<BookImage> bookImages) {
         Book book = new Book();
 
         book.title = title;
         book.author = author;
         book.price = price;
+        book.stockQuantity = stockQuantity;
 
         book.changeBookDescription(bookDescription);
         bookImages.forEach(book::addBookImage);

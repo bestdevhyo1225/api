@@ -43,7 +43,14 @@ public class BookCommandServiceImpl implements BookCommandService {
                 .collect(Collectors.toList());
 
         Book savedBook = bookRepository.save(
-                Book.create(bookCommand.getTitle(), bookCommand.getAuthor(), bookCommand.getPrice(), bookDescription, bookImages)
+                Book.create(
+                        bookCommand.getTitle(),
+                        bookCommand.getAuthor(),
+                        bookCommand.getPrice(),
+                        bookCommand.getStockQuantity(),
+                        bookDescription,
+                        bookImages
+                )
         );
 
         return new BookCreatedResult(savedBook.getId());

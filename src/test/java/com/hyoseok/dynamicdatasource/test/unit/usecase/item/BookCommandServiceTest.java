@@ -45,6 +45,7 @@ class BookCommandServiceTest {
                 .title("title")
                 .author("author")
                 .price(25000)
+                .stockQuantity(10)
                 .build();
 
         BookDescriptionCommand bookDescriptionCommand = BookDescriptionCommand.builder()

@@ -25,6 +25,9 @@ public class CreateBookRequest {
     @Positive(message = "price는 0보다 큰 수를 입력해야 합니다.")
     private int price;
 
+    @Positive(message = "stockQuantity는 0보다 큰 수를 입력해야 합니다.")
+    private int stockQuantity;
+
     @NotBlank(message = "contents는 비어 있을 수 없습니다.")
     @Length(max = 30, message = "contents는 500자 이하로 작성해주세요")
     private String contents;
