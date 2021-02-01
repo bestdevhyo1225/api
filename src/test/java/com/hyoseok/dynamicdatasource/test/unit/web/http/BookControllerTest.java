@@ -213,7 +213,7 @@ class BookControllerTest {
         );
 
         CreateBookRequest createBookRequest = new CreateBookRequest(
-                "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
+                "JPA", "author KimYH", 25000, 10, "Java Persistence Api", createBookImageRequests
         );
 
         // when
@@ -236,7 +236,7 @@ class BookControllerTest {
         );
 
         CreateBookRequest createBookRequest = new CreateBookRequest(
-                "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
+                "JPA", "author KimYH", 25000, 10, "Java Persistence Api", createBookImageRequests
         );
 
         // when
@@ -259,7 +259,7 @@ class BookControllerTest {
         );
 
         CreateBookRequest createBookRequest = new CreateBookRequest(
-                "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
+                "JPA", "author KimYH", 25000, 10, "Java Persistence Api", createBookImageRequests
         );
 
         // when
