@@ -80,7 +80,7 @@ class BookJpaServiceTest {
                         .sortOrder(0)
                         .build()
         );
-        final Book book = Book.create("title", "author", 25000, bookDescription, bookImages);
+        final Book book = Book.create("title", "author", 25000, 10, bookDescription, bookImages);
 
         given(bookQueryRepository.findBookLeftJoin(bookId)).willReturn(Optional.of(book));
 
