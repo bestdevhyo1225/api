@@ -3,6 +3,7 @@ package com.hyoseok.dynamicdatasource.test.unit.domain.item;
 import com.hyoseok.dynamicdatasource.domain.item.Book;
 import com.hyoseok.dynamicdatasource.domain.item.BookDescription;
 import com.hyoseok.dynamicdatasource.domain.item.BookImage;
+import com.hyoseok.dynamicdatasource.domain.exception.NotEnoughStockException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("BookAggregate 테스트")
 class BookAggregateTest {
@@ -125,6 +127,7 @@ class BookAggregateTest {
                 .title("title")
                 .author("author")
                 .price(25000)
+                .stockQuantity(10)
                 .build();
 
         // when
@@ -137,5 +140,39 @@ class BookAggregateTest {
         assertThat(book.getTitle()).isEqualTo(changeTitle);
         assertThat(book.getAuthor()).isEqualTo(changeAuthor);
         assertThat(book.getPrice()).isEqualTo(changePrice);
+    }
+
+    @Test
+    void Book의_재고_수량이_남아_있다면_차감할_수_있다() {
+        // given
+        Book book = Book.builder()
+                .title("title")
+                .author("author")
+                .price(25000)
+                .stockQuantity(10)
+                .build();
+
+        // when
+        book.decreaseStockQuantity(2);
+
+        // then
+        assertThat(book.getStockQuantity()).isEqualTo(8);
+    }
+
+    @Test
+    void Book의_재고_수량이_없는데_차감하려고_한다면_예외가_발생한다() {
+        // given
+        Book book = Book.builder()
+                .title("title")
+                .author("author")
+                .price(25000)
+                .stockQuantity(0)
+                .build();
+
+        // when
+        NotEnoughStockException exception = assertThrows(NotEnoughStockException.class, () -> book.decreaseStockQuantity(3));
+
+        // then
+        assertThat(exception.getMessage()).isEqualTo("재고 수량이 부족합니다.");
     }
 }
