@@ -1,6 +1,7 @@
 package com.hyoseok.dynamicdatasource.domain.item;
 
 import com.hyoseok.dynamicdatasource.domain.BaseEntity;
+import com.hyoseok.dynamicdatasource.domain.item.exception.NotEnoughStockException;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -53,6 +54,11 @@ public class Book extends BaseEntity {
     public void addBookImage(BookImage bookImage) {
         this.bookImages.add(bookImage);
         bookImage.changeBook(this);
+    }
+
+    public void decreaseStockQuantity(int stockQuantity) {
+        if (this.stockQuantity - stockQuantity <= 0) throw new NotEnoughStockException();
+        this.stockQuantity -= stockQuantity;
     }
 
     public void change(String title, String author, int price) {
