@@ -1,5 +1,7 @@
 # Master / Slave 기반 Docker MySQL 컨테이너 구성
 
+**주의! Entity 컬럼 변경시, application.yml에서 update로 해놓으면, 스키마 변경 내역이 Master DB에는 반영이 되지만, Slave DB에는 스키마 변경 내역이 반영이 안되기 때문에 컨테이너 및 이미지를 삭제한 후, 다시 도커 이미지를 생성하고 컨테이너를 실행해야 한다...(2021.02.01)**
+
 <br>
 
 ## Docker Container 실행 방법
