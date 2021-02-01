@@ -80,7 +80,7 @@ class BookJpaServiceTest {
                         .sortOrder(0)
                         .build()
         );
-        final Book book = Book.create("title", "author", 25000, bookDescription, bookImages);
+        final Book book = Book.create("title", "author", 25000, 10, bookDescription, bookImages);
 
         given(bookQueryRepository.findBookLeftJoin(bookId)).willReturn(Optional.of(book));
 
@@ -94,6 +94,7 @@ class BookJpaServiceTest {
         assertThat(bookDetailResult.getTitle()).isEqualTo("title");
         assertThat(bookDetailResult.getAuthor()).isEqualTo("author");
         assertThat(bookDetailResult.getPrice()).isEqualTo(25000);
+        assertThat(bookDetailResult.getStockQuantity()).isEqualTo(10);
         assertThat(bookDetailResult.getContents()).isEqualTo("contents");
         assertThat(bookDetailResult.getImages().get(0).getKinds()).isEqualTo("kinds");
         assertThat(bookDetailResult.getImages().get(0).getImageUrl()).isEqualTo("imageUrl");

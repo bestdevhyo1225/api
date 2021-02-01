@@ -67,9 +67,10 @@ class BookAggregateTest {
         String title = "JPA";
         String author = "저자1";
         int price = 20000;
+        int stockQuantity = 10;
 
         // when
-        Book book = Book.create(title, author, price, bookDescription, bookImages);
+        Book book = Book.create(title, author, price, stockQuantity, bookDescription, bookImages);
 
         // then
         assertThat(book.getTitle()).isEqualTo(title);

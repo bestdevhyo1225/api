@@ -41,7 +41,7 @@ public class BookIntegrationTest {
                 new CreateBookImageRequest("kinds", "imageUrl", 0)
         );
         final CreateBookRequest createBookRequest = new CreateBookRequest(
-                "JPA", "author KimYH", 25000, "Java Persistence Api", createBookImageRequests
+                "JPA", "author KimYH", 25000, 10, "Java Persistence Api", createBookImageRequests
         );
         final CreateJwtRequest createJwtRequest = new CreateJwtRequest(1234, "ADMIN");
         final String content = mockMvc.perform(post("/jwt")
