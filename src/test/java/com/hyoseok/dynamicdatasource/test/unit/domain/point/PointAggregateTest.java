@@ -6,7 +6,6 @@ import com.hyoseok.dynamicdatasource.domain.point.StorePointCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class PointAggregateTest {
         final StorePointCode code = StorePointCode.PROMOTION_A;
         final int tradingPoint = 20;
         final Long detailAccumulateId = 1L;
-        final LocalDateTime expirationDate = LocalDateTime.now().plusWeeks(1L);
 
         // when
         PointDetail pointDetail = PointDetail.builder()
@@ -30,7 +28,6 @@ public class PointAggregateTest {
                 .code(code)
                 .tradingPoint(tradingPoint)
                 .detailAccumulateId(detailAccumulateId)
-                .expirationDate(expirationDate)
                 .build();
 
         // then
@@ -38,7 +35,6 @@ public class PointAggregateTest {
         assertThat(pointDetail.getCode()).isEqualTo(code);
         assertThat(pointDetail.getTradingPoint()).isEqualTo(tradingPoint);
         assertThat(pointDetail.getDetailAccumulateId()).isEqualTo(detailAccumulateId);
-        assertThat(pointDetail.getExpirationDate()).isEqualTo(expirationDate);
     }
 
     @Test
@@ -48,7 +44,6 @@ public class PointAggregateTest {
         final StorePointCode code = StorePointCode.PROMOTION_A;
         final int tradingPoint = 20;
         final Long detailAccumulateId = 1L;
-        final LocalDateTime expirationDate = LocalDateTime.now().plusWeeks(1L);
 
         final List<PointDetail> pointDetails = Collections.singletonList(
                 PointDetail.builder()
@@ -56,14 +51,13 @@ public class PointAggregateTest {
                         .code(code)
                         .tradingPoint(tradingPoint)
                         .detailAccumulateId(detailAccumulateId)
-                        .expirationDate(expirationDate)
                         .build()
         );
 
         final Long orderId = 1L;
 
         // when
-        Point point = Point.create(memberId, code, tradingPoint, orderId, expirationDate, pointDetails);
+        Point point = Point.create(memberId, code, tradingPoint, orderId, pointDetails);
 
         // then
         assertThat(point.getMemberId()).isEqualTo(memberId);
@@ -74,6 +68,5 @@ public class PointAggregateTest {
         assertThat(point.getPointDetails().get(0).getCode()).isEqualTo(code);
         assertThat(point.getPointDetails().get(0).getTradingPoint()).isEqualTo(tradingPoint);
         assertThat(point.getPointDetails().get(0).getDetailAccumulateId()).isEqualTo(detailAccumulateId);
-        assertThat(point.getPointDetails().get(0).getExpirationDate()).isEqualTo(expirationDate);
     }
 }
