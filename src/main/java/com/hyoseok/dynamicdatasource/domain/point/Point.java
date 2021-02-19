@@ -24,8 +24,9 @@ public class Point extends BaseTimeEntity {
     @Column(nullable = false)
     private Long memberId;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PointStatus status;
+    private StorePointCode code;
 
     @Column(nullable = false)
     private int amounts;
@@ -44,19 +45,15 @@ public class Point extends BaseTimeEntity {
         pointDetail.changePoint(this);
     }
 
-    public static Point create(final Long memberId,
-                               final PointStatus status,
-                               final int amounts,
-                               final Long orderId,
-                               final LocalDateTime expirationDate,
-                               final List<PointDetail> pointDetails) {
+    public static Point create(final Long memberId, final StorePointCode code, final int amounts,
+                               final Long orderId, final List<PointDetail> pointDetails) {
         Point point = new Point();
 
         point.memberId = memberId;
-        point.status = status;
+        point.code = code;
         point.amounts = amounts;
         point.orderId = orderId;
-        point.expirationDate = expirationDate;
+        point.expirationDate = LocalDateTime.now().plusDays(code.getValidDays());
 
         pointDetails.forEach(point::addPointDetail);
 
