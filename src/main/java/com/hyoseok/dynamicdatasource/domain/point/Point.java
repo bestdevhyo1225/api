@@ -45,12 +45,8 @@ public class Point extends BaseTimeEntity {
         pointDetail.changePoint(this);
     }
 
-    public static Point create(final Long memberId,
-                               final StorePointCode code,
-                               final int amounts,
-                               final Long orderId,
-                               final LocalDateTime expirationDate,
-                               final List<PointDetail> pointDetails) {
+    public static Point create(final Long memberId, final StorePointCode code, final int amounts,
+                               final Long orderId, final LocalDateTime expirationDate, final List<PointDetail> pointDetails) {
         Point point = new Point();
 
         point.memberId = memberId;

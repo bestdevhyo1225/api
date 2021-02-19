@@ -36,4 +36,8 @@ public enum StorePointCode {
         if (!isExistStorePointCode(code)) throw new NotFoundStorePointCodeException();
         return StorePointCode.valueOf(code);
     }
+
+    public boolean isNotMileageConversionCancelCode() {
+        return this != MILEAGE_CONVERSION_CANCEL;
+    }
 }
