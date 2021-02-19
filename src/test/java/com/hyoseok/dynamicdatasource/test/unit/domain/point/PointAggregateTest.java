@@ -21,7 +21,6 @@ public class PointAggregateTest {
         final Long memberId = 1L;
         final PointStatus status = PointStatus.ACCUMULATE;
         final int tradingPoint = 20;
-        final Long detailCancelId = 1L;
         final Long detailAccumulateId = 1L;
         final LocalDateTime expirationDate = LocalDateTime.now().plusWeeks(1L);
 
@@ -30,7 +29,6 @@ public class PointAggregateTest {
                 .memberId(memberId)
                 .status(status)
                 .tradingPoint(tradingPoint)
-                .detailCancelId(detailCancelId)
                 .detailAccumulateId(detailAccumulateId)
                 .expirationDate(expirationDate)
                 .build();
@@ -40,7 +38,6 @@ public class PointAggregateTest {
         assertThat(pointDetail.getStatus()).isEqualTo(status);
         assertThat(pointDetail.getStatus().getValue()).isEqualTo(status.getValue());
         assertThat(pointDetail.getTradingPoint()).isEqualTo(tradingPoint);
-        assertThat(pointDetail.getDetailCancelId()).isEqualTo(detailCancelId);
         assertThat(pointDetail.getDetailAccumulateId()).isEqualTo(detailAccumulateId);
         assertThat(pointDetail.getExpirationDate()).isEqualTo(expirationDate);
     }
@@ -51,7 +48,6 @@ public class PointAggregateTest {
         final Long memberId = 1L;
         final PointStatus status = PointStatus.ACCUMULATE;
         final int tradingPoint = 20;
-        final Long detailCancelId = 1L;
         final Long detailAccumulateId = 1L;
         final LocalDateTime expirationDate = LocalDateTime.now().plusWeeks(1L);
 
@@ -60,7 +56,6 @@ public class PointAggregateTest {
                         .memberId(memberId)
                         .status(status)
                         .tradingPoint(tradingPoint)
-                        .detailCancelId(detailCancelId)
                         .detailAccumulateId(detailAccumulateId)
                         .expirationDate(expirationDate)
                         .build()
@@ -81,7 +76,6 @@ public class PointAggregateTest {
         assertThat(point.getPointDetails().get(0).getStatus()).isEqualTo(status);
         assertThat(point.getPointDetails().get(0).getStatus().getValue()).isEqualTo(status.getValue());
         assertThat(point.getPointDetails().get(0).getTradingPoint()).isEqualTo(tradingPoint);
-        assertThat(point.getPointDetails().get(0).getDetailCancelId()).isEqualTo(detailCancelId);
         assertThat(point.getPointDetails().get(0).getDetailAccumulateId()).isEqualTo(detailAccumulateId);
         assertThat(point.getPointDetails().get(0).getExpirationDate()).isEqualTo(expirationDate);
     }
