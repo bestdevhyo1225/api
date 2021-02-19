@@ -41,19 +41,18 @@ public class PointDetail extends BaseTimeEntity {
     private Point point;
 
     @Builder
-    public PointDetail(final Long memberId, final StorePointCode code, final int tradingPoint,
-                       final Long detailAccumulateId, final LocalDateTime expirationDate) {
+    public PointDetail(final Long memberId, final StorePointCode code, final int tradingPoint, final Long detailAccumulateId) {
         this.memberId = memberId;
         this.code = code;
         this.tradingPoint = tradingPoint;
-        this.detailAccumulateId = detailAccumulateId == null ? 0 : detailAccumulateId;
-        this.expirationDate = expirationDate;
+        this.detailAccumulateId = detailAccumulateId != null ? detailAccumulateId : 0;
+        this.expirationDate = LocalDateTime.now().plusDays(code.getValidDays());
     }
 
     @PostPersist
     public void changeDedailAccumulateId() {
-        if (StorePointCodeGroup.isAccumulationGroup(this.code) && this.code.isNotMileageConversionCancelCode()) {
-            this.detailAccumulateId = this.id;
+        if (StorePointCodeGroup.isAccumulationGroup(code) && !code.isMileageConversionCancelCode()) {
+            detailAccumulateId = id;
         }
     }
 
