@@ -23,8 +23,10 @@ public class PointDetail extends BaseTimeEntity {
     @Column(nullable = false)
     private Long memberId;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PointStatus status;
+    private StorePointCode code;
+
 
     @Column(nullable = false)
     private int tradingPoint;
@@ -41,12 +43,12 @@ public class PointDetail extends BaseTimeEntity {
 
     @Builder
     public PointDetail(final Long memberId,
-                       final PointStatus status,
+                       final StorePointCode code,
                        final int tradingPoint,
                        final Long detailAccumulateId,
                        final LocalDateTime expirationDate) {
         this.memberId = memberId;
-        this.status = status;
+        this.code = code;
         this.tradingPoint = tradingPoint;
         this.detailAccumulateId = detailAccumulateId;
         this.expirationDate = expirationDate;
