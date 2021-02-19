@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Transactional(readOnly = true)
 @DisplayName("PointRepository 테스트")
 public class PointRepositoryTest {
 
@@ -22,6 +24,7 @@ public class PointRepositoryTest {
     private PointRepository pointRepository;
 
     @Test
+    @Transactional
     void MILEAGE_CONVERSION_CANCEL을_제외한_ACCUMULATION_그룹의_코드를_저장하면_pointDetailId_와_detailAccumulationId가_같다() {
         // given
         final Long memberId = 1L;
