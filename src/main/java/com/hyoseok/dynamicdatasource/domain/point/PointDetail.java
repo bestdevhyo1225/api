@@ -30,9 +30,6 @@ public class PointDetail extends BaseTimeEntity {
     private int tradingPoint;
 
     @Column(nullable = false)
-    private Long detailCancelId;
-
-    @Column(nullable = false)
     private Long detailAccumulateId;
 
     @Column(nullable = false)
@@ -46,13 +43,11 @@ public class PointDetail extends BaseTimeEntity {
     public PointDetail(final Long memberId,
                        final PointStatus status,
                        final int tradingPoint,
-                       final Long detailCancelId,
                        final Long detailAccumulateId,
                        final LocalDateTime expirationDate) {
         this.memberId = memberId;
         this.status = status;
         this.tradingPoint = tradingPoint;
-        this.detailCancelId = detailCancelId;
         this.detailAccumulateId = detailAccumulateId;
         this.expirationDate = expirationDate;
     }
