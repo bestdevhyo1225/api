@@ -5,37 +5,58 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static com.hyoseok.dynamicdatasource.domain.product.QProduct.product;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductDescription.productDescription;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductGroup.productGroup;
-import static com.hyoseok.dynamicdatasource.domain.product.QProductGroupDescription.productGroupDescription;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductImage.productImage;
 import static com.querydsl.core.group.GroupBy.*;
 
 @Repository
+@RequiredArgsConstructor
 public class ProductQueryRepositoryImpl implements ProductQueryRepository {
 
+    private final static long MAX_LIMIT_COUNT = 3000;
     private final JPAQueryFactory queryFactory;
 
-    public ProductQueryRepositoryImpl(JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
+    @Override
+    public Map<Product, List<ProductImage>> findProductGroupById(Long lastId, long defaultLimitCount, long productImageRowCount) {
+        long limitCount = defaultLimitCount * productImageRowCount;
+
+        if (limitCount > MAX_LIMIT_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * productImageRowCount 값이 " + MAX_LIMIT_COUNT + "을 넘었습니다.");
+        }
+
+        return queryFactory
+                .from(product)
+                .innerJoin(product.productGroup, productGroup).fetchJoin()
+                .innerJoin(product.productImages, productImage)
+                .where(
+                        productIdGt(lastId),
+                        productImageKeyEq("profileImage")
+                )
+                .limit(limitCount)
+                .transform(groupBy(product).as(list(productImage)));
     }
 
     @Override
-    public Map<Product, List<ProductImage>> findProductGroupById(Long id) {
+    public Map<Product, List<ProductDescription>> findProductGroupByIdV2(Long lastId, int limitCount) {
         return queryFactory
                 .from(product)
-                .innerJoin(product.productImages, productImage)
                 .innerJoin(product.productGroup, productGroup).fetchJoin()
-                .where(productIdEq(id))
-                .transform(
-                        groupBy(product).as(list(productImage))
-                );
+                .innerJoin(product.productDescriptions, productDescription)
+                .where(
+                        productIdGt(lastId),
+                        productDescriptionKeyIn(Arrays.asList("name", "nameEng", "banner"))
+                )
+                .limit(limitCount)
+                .transform(groupBy(product).as(list(productDescription)));
     }
 
     @Override
@@ -106,5 +127,9 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
 
     private BooleanExpression productImageKeyEq(String key) {
         return productImage.key.eq(key);
+    }
+
+    private BooleanExpression productDescriptionKeyIn(List<String> keys) {
+        return productDescription.key.in(keys);
     }
 }

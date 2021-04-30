@@ -4,6 +4,7 @@
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.ActiveProfiles;
 //import org.springframework.transaction.annotation.Transactional;
 //
 //import javax.persistence.EntityManager;
@@ -27,46 +28,6 @@
 //
 //    @Test
 //    void test1() {
-//        List<ProductImage> productImages = Arrays.asList(
-//                new ProductImage("key1", "value1"),
-//                new ProductImage("key2", "value2")
-//        );
-//
-//        List<ProductDescription> productDescriptions = Arrays.asList(
-//                new ProductDescription("name", "hello", 0),
-//                new ProductDescription("nameEng", "안녕", 1),
-//                new ProductDescription("banner", "bannerImages", 0),
-//                new ProductDescription("contents", "내용", 1)
-//        );
-//
-//        ProductGroup productGroup = new ProductGroup("code");
-//
-//        Product product = Product.create("name", 15_000, productGroup, productImages, productDescriptions);
-//
-//        productRepository.save(product);
-//
-//        entityManager.flush();
-//        entityManager.clear();
-//
-//        Map<Product, List<ProductImage>> productsMap = productQueryRepository.findProductGroupById(product.getId());
-//
-//        System.out.println("productsMap size: " + productsMap.size());
-//
-//        for (Map.Entry<Product, List<ProductImage>> entry : productsMap.entrySet()) {
-//            Product findProduct = entry.getKey();
-//            ProductGroup findProducGroup = findProduct.getProductGroup();
-//            List<ProductImage> findProductImages = entry.getValue();
-//
-//            System.out.println("product = " + findProduct);
-//            System.out.println("productGroup = " + findProducGroup);
-//            System.out.println("productImages = " + findProductImages);
-//            System.out.println("productImages key = " + findProductImages.get(0).getKey());
-//            System.out.println("productImages value = " + findProductImages.get(0).getValue());
-//        }
-//    }
-//
-//    @Test
-//    void test2() {
 //        List<ProductImage> productImages = Arrays.asList(
 //                new ProductImage("profileImage", "value1"),
 //                new ProductImage("mainImage", "value2")
@@ -111,7 +72,7 @@
 //    }
 //
 //    @Test
-//    void test3() {
+//    void test2() {
 //        int size = 10;
 //
 //        for (int i = 0; i < size; i++) {
@@ -172,9 +133,9 @@
 //    }
 //
 //    @Test
-//    void test4() {
+//    void test3() {
 //        Long lastId = 0L;
-//        int size = 1000;
+//        int size = 10;
 //
 //        for (int i = 0; i < size; i++) {
 //            System.out.println("----- insert start : " + i + " -----");
@@ -220,6 +181,117 @@
 //            System.out.println(findProductGroup);
 //            System.out.println(findProductDescriptions);
 //            System.out.println(findProductGroupDescriptions);
+//        }
+//    }
+//
+//    @Test
+//    void test4() {
+//        int size = 10;
+//
+//        for (int i = 0; i < size; i++) {
+//            List<ProductImage> productImages = Arrays.asList(
+//                    new ProductImage("profileImage", "value1"),
+//                    new ProductImage("mainImage", "value2")
+//            );
+//
+//            List<ProductGroupDescription> productGroupDescriptions = Arrays.asList(
+//                    new ProductGroupDescription("name", "groupValueEng", 0),
+//                    new ProductGroupDescription("name", "groupValueKor", 1)
+//            );
+//
+//            ProductGroup productGroup = ProductGroup.create("code", productGroupDescriptions);
+//
+//            List<ProductDescription> productDescriptions = Arrays.asList(
+//                    new ProductDescription("name", "hello", 0),
+//                    new ProductDescription("nameEng", "안녕", 1),
+//                    new ProductDescription("banner", "bannerImages", 0),
+//                    new ProductDescription("contents", "내용", 1)
+//            );
+//
+//            Product product = Product.create("name" + i, 15_000, productGroup, productImages, productDescriptions);
+//
+//            productRepository.save(product);
+//        }
+//
+//        entityManager.flush();
+//        entityManager.clear();
+//
+//        Long lastId = 0L;
+//        int productDescriptionRowCount = 3;
+//        int limitCount = productDescriptionRowCount * 1000;
+//
+//        Map<Product, List<ProductDescription>> productsMap = productQueryRepository.findProductGroupByIdV2(lastId, limitCount);
+//
+//        System.out.println("productMap values size = " + productsMap.values().size());
+//
+//        for (Map.Entry<Product, List<ProductDescription>> entry : productsMap.entrySet()) {
+//            Product product = entry.getKey();
+//            ProductGroup productGroup = product.getProductGroup();
+//            List<ProductGroupDescription> productGroupDescriptions = productGroup.getProductGroupDescriptions();
+//            List<ProductImage> productImages = product.getProductImages();
+//            List<ProductDescription> productDescriptions = entry.getValue();
+//
+//            System.out.println(product);
+//            System.out.println(productImages);
+//            System.out.println(productGroup);
+//            System.out.println(productDescriptions);
+//            System.out.println(productGroupDescriptions);
+//        }
+//    }
+//
+//    @Test
+//    void test5() {
+//        int size = 1000;
+//
+//        for (int i = 0; i < size; i++) {
+//            List<ProductImage> productImages = Arrays.asList(
+//                    new ProductImage("profileImage", "value1"),
+//                    new ProductImage("mainImage", "value2")
+//            );
+//
+//            List<ProductGroupDescription> productGroupDescriptions = Arrays.asList(
+//                    new ProductGroupDescription("name", "groupValueEng", 0),
+//                    new ProductGroupDescription("name", "groupValueKor", 1)
+//            );
+//
+//            ProductGroup productGroup = ProductGroup.create("code", productGroupDescriptions);
+//
+//            List<ProductDescription> productDescriptions = Arrays.asList(
+//                    new ProductDescription("name", "hello", 0),
+//                    new ProductDescription("nameEng", "안녕", 1),
+//                    new ProductDescription("banner", "bannerImages", 0),
+//                    new ProductDescription("contents", "내용", 1)
+//            );
+//
+//            Product product = Product.create("name" + i, 15_000, productGroup, productImages, productDescriptions);
+//
+//            productRepository.save(product);
+//        }
+//
+//        entityManager.flush();
+//        entityManager.clear();
+//
+//        Long lastId = 0L;
+//        long productImageRowCount = 1;
+//        long defaultLimitCount = 1000;
+//
+//        Map<Product, List<ProductImage>> productsMap =
+//                productQueryRepository.findProductGroupById(lastId, defaultLimitCount, productImageRowCount);
+//
+//        System.out.println("productMap values size = " + productsMap.values().size());
+//
+//        for (Map.Entry<Product, List<ProductImage>> entry : productsMap.entrySet()) {
+//            Product product = entry.getKey();
+//            ProductGroup productGroup = product.getProductGroup();
+//            List<ProductGroupDescription> productGroupDescriptions = productGroup.getProductGroupDescriptions();
+//            List<ProductDescription> productImages = product.getProductDescriptions();
+//            List<ProductImage> productDescriptions = entry.getValue();
+//
+//            System.out.println(product);
+//            System.out.println(productImages);
+//            System.out.println(productGroup);
+//            System.out.println(productDescriptions);
+//            System.out.println(productGroupDescriptions);
 //        }
 //    }
 //}
