@@ -26,8 +26,8 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Map<Product, List<ProductImage>> findProductGroupById(Long lastId, long defaultLimitCount, long productImageRowCount) {
-        long limitCount = defaultLimitCount * productImageRowCount;
+    public Map<Product, List<ProductImage>> findProductGroupById(Long lastId, int defaultLimitCount, int productImageRowCount) {
+        long limitCount = (long) defaultLimitCount * productImageRowCount;
 
         if (limitCount > MAX_LIMIT_COUNT) {
             throw new IllegalArgumentException("defaultLimitCount * productImageRowCount 값이 " + MAX_LIMIT_COUNT + "을 넘었습니다.");

@@ -272,8 +272,8 @@
 //        entityManager.clear();
 //
 //        Long lastId = 0L;
-//        long productImageRowCount = 1;
-//        long defaultLimitCount = 1000;
+//        int productImageRowCount = 1;
+//        int defaultLimitCount = 1000;
 //
 //        Map<Product, List<ProductImage>> productsMap =
 //                productQueryRepository.findProductGroupById(lastId, defaultLimitCount, productImageRowCount);
