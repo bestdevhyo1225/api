@@ -14,7 +14,7 @@ spring:
 #      password: example
 
   jpa:
-    database-platform: com.hyoseok.dynamicdatasource.infrastructure.mysql.MySqlCustomDialect
+#    database-platform: com.hyoseok.dynamicdatasource.infrastructure.mysql.MySqlCustomDialect
     hibernate:
       ddl-auto: create
     properties:
