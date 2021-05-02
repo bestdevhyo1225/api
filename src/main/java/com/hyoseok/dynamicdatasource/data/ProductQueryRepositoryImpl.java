@@ -46,7 +46,13 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
     }
 
     @Override
-    public Map<Product, List<ProductDescription>> findProductGroupByIdV2(Long lastId, int limitCount) {
+    public Map<Product, List<ProductDescription>> findProductGroupByIdV2(Long lastId, int defaultLimitCount, int productDescriptionRowCount) {
+        long limitCount = (long) defaultLimitCount * productDescriptionRowCount;
+
+        if (limitCount > MAX_LIMIT_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * productImageRowCount 값이 " + MAX_LIMIT_COUNT + "을 넘었습니다.");
+        }
+
         return queryFactory
                 .from(product)
                 .innerJoin(product.productGroup, productGroup).fetchJoin()

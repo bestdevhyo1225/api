@@ -186,7 +186,7 @@
 //
 //    @Test
 //    void test4() {
-//        int size = 10;
+//        int size = 1000;
 //
 //        for (int i = 0; i < size; i++) {
 //            List<ProductImage> productImages = Arrays.asList(
@@ -218,11 +218,14 @@
 //
 //        Long lastId = 0L;
 //        int productDescriptionRowCount = 3;
-//        int limitCount = productDescriptionRowCount * 1000;
+//        int defaultLimitCount = 1000;
 //
-//        Map<Product, List<ProductDescription>> productsMap = productQueryRepository.findProductGroupByIdV2(lastId, limitCount);
+//        Map<Product, List<ProductDescription>> productsMap =
+//                productQueryRepository.findProductGroupByIdV2(lastId, defaultLimitCount, productDescriptionRowCount);
 //
 //        System.out.println("productMap values size = " + productsMap.values().size());
+//
+//        long startTime = System.currentTimeMillis();
 //
 //        for (Map.Entry<Product, List<ProductDescription>> entry : productsMap.entrySet()) {
 //            Product product = entry.getKey();
@@ -237,6 +240,10 @@
 //            System.out.println(productDescriptions);
 //            System.out.println(productGroupDescriptions);
 //        }
+//
+//        long endTime = System.currentTimeMillis();
+//
+//        System.out.println("execution time = " + (endTime - startTime));
 //    }
 //
 //    @Test
@@ -280,6 +287,8 @@
 //
 //        System.out.println("productMap values size = " + productsMap.values().size());
 //
+//        long startTime = System.currentTimeMillis();
+//
 //        for (Map.Entry<Product, List<ProductImage>> entry : productsMap.entrySet()) {
 //            Product product = entry.getKey();
 //            ProductGroup productGroup = product.getProductGroup();
@@ -293,5 +302,9 @@
 //            System.out.println(productDescriptions);
 //            System.out.println(productGroupDescriptions);
 //        }
+//
+//        long endTime = System.currentTimeMillis();
+//
+//        System.out.println("execution time = " + (endTime - startTime));
 //    }
 //}

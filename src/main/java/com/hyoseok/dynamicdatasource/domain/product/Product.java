@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@ToString(exclude = {"productImages", "productGroup"})
+@ToString(exclude = {"productGroup", "productDescriptions", "productImages"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
