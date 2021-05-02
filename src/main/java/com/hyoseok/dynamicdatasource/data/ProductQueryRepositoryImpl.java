@@ -1,6 +1,7 @@
 package com.hyoseok.dynamicdatasource.data;
 
 import com.hyoseok.dynamicdatasource.domain.product.*;
+import com.querydsl.core.group.Group;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -8,7 +9,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +17,13 @@ import static com.hyoseok.dynamicdatasource.domain.product.QProductDescription.p
 import static com.hyoseok.dynamicdatasource.domain.product.QProductGroup.productGroup;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductImage.productImage;
 import static com.querydsl.core.group.GroupBy.*;
+import static java.util.Arrays.*;
 
 @Repository
 @RequiredArgsConstructor
 public class ProductQueryRepositoryImpl implements ProductQueryRepository {
 
+    private final static long MAX_LIMIT_IMAGE_DESCRIPTION_COUNT = 4000;
     private final static long MAX_LIMIT_COUNT = 3000;
     private final JPAQueryFactory queryFactory;
 
@@ -50,7 +52,7 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
         long limitCount = (long) defaultLimitCount * productDescriptionRowCount;
 
         if (limitCount > MAX_LIMIT_COUNT) {
-            throw new IllegalArgumentException("defaultLimitCount * productImageRowCount 값이 " + MAX_LIMIT_COUNT + "을 넘었습니다.");
+            throw new IllegalArgumentException("defaultLimitCount * productDescriptionRowCount 값이 " + MAX_LIMIT_COUNT + "을 넘었습니다.");
         }
 
         return queryFactory
@@ -59,10 +61,37 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
                 .innerJoin(product.productDescriptions, productDescription)
                 .where(
                         productIdGt(lastId),
-                        productDescriptionKeyIn(Arrays.asList("name", "nameEng", "banner"))
+                        productDescriptionKeyIn(asList("name", "nameEng", "banner"))
                 )
                 .limit(limitCount)
                 .transform(groupBy(product).as(list(productDescription)));
+    }
+
+    @Override
+    public Map<Product, Group> findProductGroupByIdV3(Long lastId, int defaultLimitCount, int rowCount) {
+        long limitCount = (long) defaultLimitCount * rowCount;
+
+        if (limitCount > MAX_LIMIT_IMAGE_DESCRIPTION_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_LIMIT_IMAGE_DESCRIPTION_COUNT + "을 넘었습니다.");
+        }
+
+        return queryFactory
+                .from(product)
+                .innerJoin(product.productGroup, productGroup).fetchJoin()
+                .innerJoin(product.productDescriptions, productDescription)
+                .innerJoin(product.productImages, productImage)
+                .where(
+                        productIdGt(lastId),
+                        productDescriptionKeyIn(asList("name", "nameEng", "banner")),
+                        productImageKeyEq("profileImage")
+                )
+                .limit(limitCount)
+                .transform(
+                        groupBy(product).as(
+                                list(productDescription),
+                                list(productImage)
+                        )
+                );
     }
 
     @Override

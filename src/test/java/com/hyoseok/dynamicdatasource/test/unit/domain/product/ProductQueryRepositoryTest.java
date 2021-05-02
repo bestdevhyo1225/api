@@ -1,6 +1,7 @@
 //package com.hyoseok.dynamicdatasource.test.unit.domain.product;
 //
 //import com.hyoseok.dynamicdatasource.domain.product.*;
+//import com.querydsl.core.group.Group;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,9 @@
 //import java.util.Arrays;
 //import java.util.List;
 //import java.util.Map;
+//
+//import static com.hyoseok.dynamicdatasource.domain.product.QProductDescription.productDescription;
+//import static com.hyoseok.dynamicdatasource.domain.product.QProductImage.*;
 //
 //@SpringBootTest
 //@Transactional
@@ -301,6 +305,77 @@
 //            System.out.println(productGroup);
 //            System.out.println(productDescriptions);
 //            System.out.println(productGroupDescriptions);
+//        }
+//
+//        long endTime = System.currentTimeMillis();
+//
+//        System.out.println("execution time = " + (endTime - startTime));
+//    }
+//
+//    @Test
+//    void test6() {
+//        int size = 1000;
+//
+//        for (int i = 0; i < size; i++) {
+//            List<ProductImage> productImages = Arrays.asList(
+//                    new ProductImage("profileImage", "value1"),
+//                    new ProductImage("mainImage", "value2")
+//            );
+//
+//            List<ProductGroupDescription> productGroupDescriptions = Arrays.asList(
+//                    new ProductGroupDescription("name", "groupValueEng", 0),
+//                    new ProductGroupDescription("name", "groupValueKor", 1)
+//            );
+//
+//            ProductGroup productGroup = ProductGroup.create("code", productGroupDescriptions);
+//
+//            List<ProductDescription> productDescriptions = Arrays.asList(
+//                    new ProductDescription("name", "hello", 0),
+//                    new ProductDescription("nameEng", "안녕", 1),
+//                    new ProductDescription("banner", "bannerImages", 0),
+//                    new ProductDescription("contents", "내용", 1)
+//            );
+//
+//            Product product = Product.create("name" + i, 15_000, productGroup, productImages, productDescriptions);
+//
+//            productRepository.save(product);
+//        }
+//
+//        entityManager.flush();
+//        entityManager.clear();
+//
+//        Long lastId = 0L;
+//        int rowCount = 4;
+//        int defaultLimitCount = 1000;
+//
+//        System.out.println("[1] Max Memory : " + Runtime.getRuntime().maxMemory());
+//        System.out.println("[1] Total Memory : " + Runtime.getRuntime().totalMemory());
+//        System.out.println("[1] Used Memory : " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
+//
+//        Map<Product, Group> productsMap = productQueryRepository.findProductGroupByIdV3(lastId, defaultLimitCount, rowCount);
+//
+//        System.out.println("[2] Max Memory : " + Runtime.getRuntime().maxMemory());
+//        System.out.println("[2] Total Memory : " + Runtime.getRuntime().totalMemory());
+//        System.out.println("[2] Used Memory : " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
+//
+//        System.out.println("productMap values size = " + productsMap.values().size());
+//
+//        long startTime = System.currentTimeMillis();
+//
+//        for (Map.Entry<Product, Group> entry : productsMap.entrySet()) {
+//            Product product = entry.getKey();
+//            ProductGroup productGroup = product.getProductGroup();
+//            List<ProductGroupDescription> productGroupDescriptions = productGroup.getProductGroupDescriptions();
+//            List<ProductDescription> productDescriptions = entry.getValue().getList(productDescription);
+//            List<ProductImage> productImages = entry.getValue().getList(productImage);
+//
+//            System.out.println("------- product ------");
+//            System.out.println(product);
+//            System.out.println(productGroup);
+//            System.out.println(productGroupDescriptions);
+//            System.out.println(productDescriptions);
+//            System.out.println(productImages);
+//            System.out.println("----------------------");
 //        }
 //
 //        long endTime = System.currentTimeMillis();
