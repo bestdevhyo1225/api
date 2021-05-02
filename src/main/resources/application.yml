@@ -1,35 +1,16 @@
 spring:
-  datasource:
-    hikari:
-      write:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://localhost:9030/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-        username: masteruser
-        password: masterpassword
-        maximum-pool-size: 20
-        max-lifetime: 18000000 # 5 hour
-        connection-timeout: 5000 # 5 second
-      read:
-        list:
-          - name: read-1
-            jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-          - name: read-2
-            jdbc-url: jdbc:mysql://localhost:9032/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        username: slaveuser
-        password: slavepassword
-        maximum-pool-size: 30
-        max-lifetime: 18000000 # 5 hour
-        connection-timeout: 5000 # 5 second
+  profiles:
+    active: basic
 
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+#    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+    database-platform: com.hyoseok.dynamicdatasource.infrastructure.mysql.MySqlCustomDialect
     properties:
       hibernate:
         format_sql: true
-        default_batch_fetch_size: 500
+        default_batch_fetch_size: 1000
     open-in-view: false
 
   redis:
@@ -52,3 +33,43 @@ logging:
     com.zaxxer.hikari: trace
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+---
+spring:
+  profiles:
+    active: basic
+
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:9040/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      username: root
+      password: example
+
+---
+spring:
+  profiles:
+    active: replication
+
+  datasource:
+    hikari:
+      write:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:9030/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+        username: masteruser
+        password: masterpassword
+        maximum-pool-size: 20
+        max-lifetime: 18000000 # 5 hour
+        connection-timeout: 5000 # 5 second
+      read:
+        list:
+          - name: read-1
+            jdbc-url: jdbc:mysql://localhost:9031/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+          - name: read-2
+            jdbc-url: jdbc:mysql://localhost:9032/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: slaveuser
+        password: slavepassword
+        maximum-pool-size: 30
+        max-lifetime: 18000000 # 5 hour
+        connection-timeout: 5000 # 5 second

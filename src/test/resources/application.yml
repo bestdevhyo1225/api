@@ -7,16 +7,23 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+#    hikari:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://localhost:9040/mystore?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+#      username: root
+#      password: example
 
   jpa:
+#    database-platform: com.hyoseok.dynamicdatasource.infrastructure.mysql.MySqlCustomDialect
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 1000
 
 jwt:
   secret-key: api-secret-2021
 
-#logging.level:
-#  org.hibernate.SQL: debug
+logging.level:
+  org.hibernate.SQL: debug
