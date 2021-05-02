@@ -12,6 +12,8 @@ public interface ProductQueryRepository {
 
     Map<Product, Group> findProductGroupByIdV3(Long lastId, int defaultLimitCount, int rowCount);
 
+    List<ProductAggregation> findProductsWithJoin(Long lastId, int defaultLimitCount, int rowCount);
+
     List<Product> findProductsWithFetchInnerJoin(Long lastId, int limit);
 
     List<ProductJoinResult> findProducts(int limit);
