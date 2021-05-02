@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.hyoseok.dynamicdatasource.domain.product.QProduct.product;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductDescription.productDescription;
@@ -25,7 +24,7 @@ import static java.util.stream.Collectors.*;
 @RequiredArgsConstructor
 public class ProductQueryRepositoryImpl implements ProductQueryRepository {
 
-    private final static long MAX_LIMIT_IMAGE_DESCRIPTION_COUNT = 4000;
+    private final static long MAX_IMAGE_DESCRIPTION_LIMIT_COUNT = 4000;
     private final static long MAX_LIMIT_COUNT = 3000;
     private final JPAQueryFactory queryFactory;
 
@@ -73,8 +72,8 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
     public Map<Product, Group> findProductGroupByIdV3(Long lastId, int defaultLimitCount, int rowCount) {
         long limitCount = (long) defaultLimitCount * rowCount;
 
-        if (limitCount > MAX_LIMIT_IMAGE_DESCRIPTION_COUNT) {
-            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_LIMIT_IMAGE_DESCRIPTION_COUNT + "을 넘었습니다.");
+        if (limitCount > MAX_IMAGE_DESCRIPTION_LIMIT_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_IMAGE_DESCRIPTION_LIMIT_COUNT + "을 넘었습니다.");
         }
 
         return queryFactory
@@ -100,8 +99,8 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
     public List<ProductAggregation> findProductsWithJoin(Long lastId, int defaultLimitCount, int rowCount) {
         long limitCount = (long) defaultLimitCount * rowCount;
 
-        if (limitCount > MAX_LIMIT_IMAGE_DESCRIPTION_COUNT) {
-            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_LIMIT_IMAGE_DESCRIPTION_COUNT + "을 넘었습니다.");
+        if (limitCount > MAX_IMAGE_DESCRIPTION_LIMIT_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_IMAGE_DESCRIPTION_LIMIT_COUNT + "을 넘었습니다.");
         }
 
         Map<Product, Group> productsMap = queryFactory
