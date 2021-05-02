@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.hyoseok.dynamicdatasource.domain.product.QProduct.product;
 import static com.hyoseok.dynamicdatasource.domain.product.QProductDescription.productDescription;
@@ -18,6 +19,7 @@ import static com.hyoseok.dynamicdatasource.domain.product.QProductGroup.product
 import static com.hyoseok.dynamicdatasource.domain.product.QProductImage.productImage;
 import static com.querydsl.core.group.GroupBy.*;
 import static java.util.Arrays.*;
+import static java.util.stream.Collectors.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -92,6 +94,41 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository {
                                 list(productImage)
                         )
                 );
+    }
+
+    @Override
+    public List<ProductAggregation> findProductsWithJoin(Long lastId, int defaultLimitCount, int rowCount) {
+        long limitCount = (long) defaultLimitCount * rowCount;
+
+        if (limitCount > MAX_LIMIT_IMAGE_DESCRIPTION_COUNT) {
+            throw new IllegalArgumentException("defaultLimitCount * rowCount 값이 " + MAX_LIMIT_IMAGE_DESCRIPTION_COUNT + "을 넘었습니다.");
+        }
+
+        Map<Product, Group> productsMap = queryFactory
+                .from(product)
+                .innerJoin(product.productGroup, productGroup).fetchJoin()
+                .innerJoin(product.productDescriptions, productDescription)
+                .innerJoin(product.productImages, productImage)
+                .where(
+                        productIdGt(lastId),
+                        productDescriptionKeyIn(asList("name", "nameEng", "banner")),
+                        productImageKeyEq("profileImage")
+                )
+                .limit(limitCount)
+                .transform(
+                        groupBy(product).as(
+                                list(productDescription),
+                                list(productImage)
+                        )
+                );
+
+        return productsMap.entrySet().stream()
+                .map(entry -> new ProductAggregation(
+                        entry.getKey(),
+                        entry.getValue().getList(productDescription),
+                        entry.getValue().getList(productImage)
+                ))
+                .collect(toList());
     }
 
     @Override
