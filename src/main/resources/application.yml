@@ -29,10 +29,8 @@ jwt:
 logging:
   level:
     com.hyoseok.dynamicdatasource: debug
-    com.zaxxer.hikari.HikariConfig: debug
-    com.zaxxer.hikari: trace
+#    com.zaxxer.hikari: trace
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
 
 ---
 spring:
